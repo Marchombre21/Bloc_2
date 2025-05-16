@@ -1,0 +1,81 @@
+@import 'mixins';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  background-image: url('../public/img/images/mc_landing_banner.png');
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: transparent;
+}
+
+img {
+  width: 100%;
+}
+
+.absoluteCenter {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.boxShadow {
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.486);
+}
+
+.yellowButton {
+  @include button(black, #e0b826, black, 5px);
+  font-size: clamp(1rem, 3vw, 2rem);
+}
+
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.form-create {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  select,
+  input {
+    background-color: transparent;
+    border: #e0b826 solid 1px;
+    color: black;
+    padding: 3px 5px;
+  }
+}
+
+nav {
+  background-color: transparent;
+  margin: 15px;
+
+  button {
+    @include button(#e0b826, #da8621, 1px);
+    font-weight: bold;
+  }
+  img {
+    width: clamp(30px, 20%, 50px);
+    filter: invert(1);
+  }
+}
+
+main {
+  div.overflow-auto{
+    max-height: 40vh;
+  }
+  form {
+    fieldset {
+      margin: 5px;
+    }
+  }
+}

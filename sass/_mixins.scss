@@ -1,0 +1,17 @@
+@mixin button($color, $background, $border, $radius: false) {
+    color: $color;
+    background-color: $background;
+    border: 0.1rem solid $border;
+
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+
+    @if $radius {
+        border-radius: $radius;
+    }
+
+    &:hover {
+        color: $background;
+        background-color: $color;
+    }
+}
