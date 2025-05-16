@@ -10,7 +10,7 @@ html {
 
 body {
   font-size: 1.6rem;
-  background-image: url("../img/images/mc_landing_banner.png");
+  background-image: url("../../../img/images/mc_landing_banner.png");
   background-position: top;
   background-repeat: no-repeat;
   height: 100dvh;
@@ -50,13 +50,12 @@ a {
   text-align: center;
   border-radius: 15px;
   padding: 2rem;
+  box-shadow: 2px 2px 10px 1px black;
 }
 #order-type button {
   border: 5px solid yellow;
   margin: 1rem;
-  padding: 3rem 5rem;
-  width: 250px;
-  height: 200px;
+  padding: 0.5rem;
 }
 #order-type button a {
   text-decoration: inherit;

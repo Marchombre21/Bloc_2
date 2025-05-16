@@ -5,13 +5,12 @@
     text-align: center;
     border-radius: 15px;
     padding: 2rem;
+    box-shadow: 2px 2px 10px 1px black;
 
     button {
         border: 5px solid yellow;
         margin: 1rem;
-        padding: 3rem 5rem;
-        width: 250px;
-        height: 200px;
+        padding: 0.5rem;
 
         a {
             text-decoration: inherit;
