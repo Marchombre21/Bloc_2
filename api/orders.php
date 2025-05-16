@@ -12,7 +12,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $stmt->execute();
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            $stmt = $db->query("select * from orders order by TIMESTAMPDIFF(MINUTE, order_date, NOW()) DESC");
+            $stmt = $db->query("SELECT *, TIMESTAMPDIFF(MINUTE, order_date, NOW()) AS time FROM orders ORDER BY time DESC");
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         echo json_encode($orders);

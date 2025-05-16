@@ -36,6 +36,10 @@ class LoginController
                         header("location: ./commande/accueil/index.html");
                         exit();
                     }
+                    if ($user["function"] === "PREP") {
+                        header("location: ./commande/preparation/index.html");
+                        exit();
+                    }
 
                 } else {
                     $_SESSION["wrong"] = "Aucun utilisateur connu sous ces identifiants!";
