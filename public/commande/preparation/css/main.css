@@ -57,10 +57,6 @@ a {
   margin: 1rem;
   padding: 0.5rem;
 }
-#order-type button a {
-  text-decoration: inherit;
-  color: inherit;
-}
 #order-type button figure {
   height: 75%;
 }
@@ -68,11 +64,69 @@ a {
   font-size: 20px;
 }
 #order-type button:hover {
-  border-color: #BD0017;
+  border-color: #bd0017;
 }
 
 .marginY {
   margin: 3rem 0;
+}
+
+.yellowButton {
+  color: #be761e;
+  background-color: #e0b826;
+  border: 0.1rem solid black;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  font-size: clamp(1rem, 3vw, 2rem);
+  margin: 5px 0;
+}
+
+.yellowButton:hover {
+  color: #e0b826;
+  background-color: #eb952c;
+}
+
+nav {
+  background-color: transparent;
+  margin: 15px;
+}
+
+nav button {
+  color: #e0b826;
+  background-color: #da8621;
+  border: 0.1rem solid 1px;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  font-weight: bold;
+}
+
+nav button:hover {
+  color: #da8621;
+  background-color: #e0b826;
+  border: black 1px solid;
+}
+
+nav img {
+  width: clamp(30px, 20%, 50px);
+  filter: invert(1);
+}
+
+main div.overflow-auto {
+  max-height: 40vh;
+}
+
+table {
+  margin: 5px;
+}
+table th {
+  padding: 5px;
+}
+table tr {
+  border: 1px solid black;
+}
+table tr td {
+  padding: 5px;
 }
 
 /*# sourceMappingURL=main.css.map */

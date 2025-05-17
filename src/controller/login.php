@@ -37,7 +37,7 @@ class LoginController
                         exit();
                     }
                     if ($user["function"] === "PREP") {
-                        header("location: ./commande/preparation/index.html");
+                        header("location: ./commande/preparation/html/index.html");
                         exit();
                     }
 

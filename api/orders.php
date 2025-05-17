@@ -1,9 +1,11 @@
 <?php
+session_start();
 require_once '../config/config.php';
 header('Content-Type: application/json');
 $datas = file_get_contents('php://input');
 $data = json_decode($datas, true);
-
+// var_dump($_SERVER['REQUEST_METHOD']);
+// exit();
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         if (isset($_GET["number"])) {
@@ -51,6 +53,24 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         echo json_encode($response);
         break;
+
+    case 'PATCH':
+        if(isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "PREP"){
+            if(isset($_GET["number"]) && !empty($_GET["number"])){
+                try{
+                    $stmt = $db->prepare("update orders set isCompleted = true where order_number like :number");
+                    $stmt->bindValue(":number", $_GET["number"]);
+                    $stmt->execute();
+                    die('ok');
+                }catch(PDOException $e){
+                    echo json_encode("Un problème est survenu lors de la validation de la commande : " . $e->getMessage());
+                }
+
+            }
+        }else{
+
+            header("location: ../../../index.php");
+        }
 }
 
 
