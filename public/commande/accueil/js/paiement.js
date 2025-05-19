@@ -15,7 +15,7 @@ inputs.forEach((input, index) => {
 
 const sendOrder = (order) => {
 try{
-    fetch("../../../../api/orders.php", {
+    fetch("/api.php?route=orders.php", {
         method: "POST",
         headers: {
             "Content-type": "application/json"

@@ -87,12 +87,17 @@ const presentationCategorie = {
 // };
 
 const getCategories = async () => {
-    const categories = await fetch("../../../../api/categories.php").then(res => res.json())
-    return categories
+    try{
+        const categories = await fetch("/api.php?route=categories.php").then(res => res.json())
+        return categories
+    }catch (error) {
+        console.error('Error fetching orders:', error);
+        return [];
+    }
 }
 
 const getProducts = async () => {
-    const productsList = await fetch('../../../../api/products.php').then(res => res.json());
+    const productsList = await fetch('/api.php?route=products.php').then(res => res.json());
     return productsList
 }
 

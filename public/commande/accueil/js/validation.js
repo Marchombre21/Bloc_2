@@ -3,8 +3,16 @@ const sentence = document.getElementById("sentence");
 const button = document.querySelector('#checked');
 
 const getWaitingOrders = async () => {
-    const waitingOrders = await fetch('../../../../api/orders.php?action=valid').then(res => res.json());
-    return waitingOrders;
+    try {
+        const response = await fetch('/api.php?route=orders.php?action=valid');
+        if (!response.ok) {
+            throw new Error(`API returned status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        return [];
+    }
 }
 
 
@@ -22,7 +30,15 @@ const validOrders = orders.map((item, index) => {
         `
     )
 });
-list.innerHTML = validOrders.join("");
+
+if (validOrders.length === 0) {
+    sentence.innerText = "Aucune commande en attente de validation.";
+    list.innerHTML = "";
+} else {
+    sentence.innerText = "";
+    list.innerHTML = validOrders.join("");
+}
+
 const radios = document.querySelectorAll(".radio");
 radios.forEach(check => {
     check.addEventListener("change", (e) => {
@@ -41,14 +57,14 @@ radios.forEach(check => {
 let message = "";
 
 const deleteOrder = async (number) => {
-    const answer = await fetch(`../../../../api/orders.php?number=${number}`, {
+    const answer = await fetch(`/api.php?route=orders.php?number=${number}`, {
         method: "DELETE"
     }).then(res => res.json());
     if(answer.success){
         return true;
     }else{
+        message = answer.message || "Erreur inconnue";
         return false;
-        message = answer;
     }
 }
 

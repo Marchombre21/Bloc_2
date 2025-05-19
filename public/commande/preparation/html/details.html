@@ -17,7 +17,7 @@
       <div class="row justify-content-between">
         <div class="col-2 d-flex align-items-center justify-content-center">
           <a href="./index.html"
-            ><img src="../../../img/images/logo.png" alt="logo"
+ <img src="../../../img/images/logo.png" alt="Logo Wacdo"
           /></a>
         </div>
         <div class="col-6 col-sm-4 col-lg-2 text-center text-nowrap">
@@ -33,19 +33,20 @@
         Détails de la commande n° <span id="numberTitle"></span>
       </h2>
       <div class="overflow-auto">
-        <table>
-          <thead>
-            <tr>
-              <th>Préparé</th>
-              <th>Nom</th>
-              <th>Taille</th>
-              <th>Quantité</th>
-            </tr>
-          </thead>
-          <tbody id="list"></tbody>
-        </table>
+<table>
+  <caption class="visually-hidden">Liste des articles de la commande</caption>
+   <thead>
+     <tr>
+      <th scope="col">Préparé</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Taille</th>
+      <th scope="col">Quantité</th>
+     </tr>
+   </thead>
+   <tbody id="list"></tbody>
+ </table>
       </div>
-      <button id="checked" disabled type="button">Avertir que la commande est prête</button>
+      <button id="checked" disabled type="button" aria-label="Marquer la commande comme prête">Avertir que la commande est prête</button>
     </main>
     <script type="module" src="../js/details.js"></script>
   </body>

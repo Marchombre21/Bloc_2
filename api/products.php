@@ -16,8 +16,13 @@ if (isset($_GET["category"])) {
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } else {
-    $stmt = $db->query("select * from products");
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    try {
+        $stmt = $db->query("select * from products");
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }catch(PDOException $e){
+        echo json_encode($e->getMessage());
+    }
+
 }
 
 echo json_encode($products);

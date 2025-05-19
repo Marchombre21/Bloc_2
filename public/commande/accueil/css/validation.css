@@ -61,21 +61,15 @@ nav button:hover {
   border: black 1px solid;
 }
 
-nav img {
-  width: clamp(30px, 20%, 50px);
-  filter: invert(1);
-}
-
-body {
-  font-size: 1.6rem;
-  background-image: url("../../../img/images/mc_landing_banner.png");
-  background-position: top;
-  background-repeat: no-repeat;
-  height: 100dvh;
-  /* background-size: cover; */
-}
-
-#order-type {
+ /* Keep this complete declaration */
+ body {
+   font-size: 1.6rem;
+   background-image: url("../../../img/images/mc_landing_banner.png");
+   background-position: top;
+   background-repeat: no-repeat;
+   height: 100dvh;
+ 
+ }
   background-color: white;
   text-align: center;
   border-radius: 15px;

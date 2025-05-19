@@ -3,9 +3,17 @@ const list = document.getElementById("list");
 const button = document.querySelector('#checked');
 
 const getDetailsOrder = async (number) => {
-    const detailsOrders = await fetch(`../../../../api/orders.php?number=${number}`).then(res => res.json());
-    return detailsOrders;
-}
+    try {
+        const response = await fetch(`/api.php?route=orders.php?number=${number}`);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        alert('Impossible de récupérer les détails de la commande. Veuillez réessayer.');
+        return [];
+    }
+ }
 const params = new URLSearchParams(window.location.search);
 const number = params.get("number");
 let detailsOrder;
@@ -14,29 +22,29 @@ if (number) {
     detailsOrder = await getDetailsOrder(number)
 }
 //Méthode chatGPT qui fonctionne. Il dit que la copie est plus sécure plutôt que de splice pendant une itération ce qui risque de décaler les index 
-//mais les tests n'ont montré aucun problème donc je garde ma méthode.
+//mais les tests n'ont montré aucun problème donc je garde ma méthode. Edit: Finalement codeRabbit insiste lui aussi là-dessus donc on va arrêter d'être buté et on utilise leur façon de faire.
 // Ici on fait en sorte qu'il n'y ait qu'une seule ligne des produits de même nom et de même taille.
-// const copyDetailsOrder = [];
+const copyDetailsOrder = [];
 
-// detailsOrder.forEach(item => {
-//   const existing = copyDetailsOrder.find(el => el.product_name === item.product_name && el.xxl === item.xxl);
-//   if (existing) {
-//     existing.quantity += item.quantity;
-//   } else {
-//     copyDetailsOrder.push({ ...item });
-//   }
-// });
+detailsOrder.forEach(item => {
+  const existing = copyDetailsOrder.find(el => el.product_name === item.product_name && el.xxl === item.xxl);
+  if (existing) {
+    existing.quantity += item.quantity;
+  } else {
+    copyDetailsOrder.push({ ...item });
+  }
+});
 
-// detailsOrder = copyDetailsOrder;
+detailsOrder = copyDetailsOrder;
 
-detailsOrder.forEach((item, index) => {
-    detailsOrder.forEach((el, i) => {
-        if (item.product_name === el.product_name && item.xxl === el.xxl && index != i) {
-            detailsOrder[index].quantity += el.quantity;
-            detailsOrder.splice(i, 1);
-        }
-    })
-})
+// detailsOrder.forEach((item, index) => {
+//     detailsOrder.forEach((el, i) => {
+//         if (item.product_name === el.product_name && item.xxl === el.xxl && index != i) {
+//             detailsOrder[index].quantity += el.quantity;
+//             detailsOrder.splice(i, 1);
+//         }
+//     })
+// })
 
 const itemsList = detailsOrder.map((item, index) => {
     return (
@@ -68,12 +76,25 @@ document.querySelectorAll(".checkbox").forEach(check => {
 })
 
 const updateOrderStatut = async () => {
-    await fetch(`../../../../api/orders.php?number=${number}`, {
-        method: "PATCH"
-    })
-}
+    try {
+        const response = await fetch(`/api.php?route=orders.php?number=${number}`, {
+            method: "PATCH"
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        
+        return true;
+    } catch (error) {
+        alert('Impossible de mettre à jour le statut de la commande. Veuillez réessayer.');
+        return false;
+    }
+ }
 
 button.addEventListener("click", async() => {
-    await updateOrderStatut();
-    window.location.href = '../html/index.html'
-})
+    const success = await updateOrderStatut();
+    if (success) {
+        window.location.href = '../html/index.html';
+    }
+ })
