@@ -4,7 +4,7 @@ const button = document.querySelector('#checked');
 
 const getWaitingOrders = async () => {
     try {
-        const response = await fetch('/api.php?route=orders.php?action=valid');
+        const response = await fetch('/api.php?route=orders.php&action=valid');
         if (!response.ok) {
             throw new Error(`API returned status: ${response.status}`);
         }
@@ -57,7 +57,7 @@ radios.forEach(check => {
 let message = "";
 
 const deleteOrder = async (number) => {
-    const answer = await fetch(`/api.php?route=orders.php?number=${number}`, {
+    const answer = await fetch(`/api.php?route=orders.php&number=${number}`, {
         method: "DELETE"
     }).then(res => res.json());
     if(answer.success){
@@ -69,9 +69,8 @@ const deleteOrder = async (number) => {
 }
 
 button.addEventListener("click", async (e) => {
-    // e.preventDefault();
-    // const params = new URLSearchParams(window.location.search);
-    const orderNumber = document.querySelector("input[name='order']:checked").value;
+    const selectedOrder = document.querySelector("input[name='order']:checked");
+    const orderNumber = selectedOrder ? selectedOrder.value : null;
     if (orderNumber) {
 
         if (await deleteOrder(orderNumber)) {

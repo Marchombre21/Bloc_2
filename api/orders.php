@@ -14,7 +14,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $stmt->execute();
                 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else if (isset($_GET["action"])) {
-                // echo json_encode('action');
                 $stmt = $db->prepare("select * from orders where isCompleted = 1");
                 $stmt->execute();
                 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -72,9 +71,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $stmt->bindValue(":number", $_GET["number"]);
                     $stmt->execute();
                     echo json_encode(["success" => true]);
-                    exit;
                 } catch (PDOException $e) {
-                    echo json_encode("Un problème est survenu lors de la validation de la commande : " . $e->getMessage());
+                    echo json_encode(["error" => "Un problème est survenu lors de la validation de la commande : " . $e->getMessage()]);
                 }
 
             }
@@ -93,9 +91,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     if ($stmt->execute()) {
                         echo json_encode(["success" => true]);
                     }
+                    else {
+                        echo json_encode(["error" => "Échec de la suppression de la commande."]);
+                    }
 
                 } catch (PDOException $e) {
-                    echo json_encode($e->getMessage());
+                    echo json_encode(["error" => $e->getMessage()]);
                 }
 
             } else {

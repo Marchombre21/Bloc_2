@@ -19,8 +19,9 @@ if (isset($_GET["category"])) {
     try {
         $stmt = $db->query("select * from products");
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }catch(PDOException $e){
-        echo json_encode($e->getMessage());
+    } catch(PDOException $e) {
+        echo json_encode(['error' => 'Failed to retrieve products']);
+        exit();
     }
 
 }

@@ -100,7 +100,7 @@ export const updateOrder = () => {
     localStorage.setItem("order", JSON.stringify(finalOrder))
     window.location.href = "./paiement.html"
   })
-  buttonPay = document.querySelector("#pay");
+  buttonPay = order.querySelector("#pay");
   buttonPay.disabled = (result === 0);
 }
 

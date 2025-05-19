@@ -97,8 +97,17 @@ const getCategories = async () => {
 }
 
 const getProducts = async () => {
-    const productsList = await fetch('/api.php?route=products.php').then(res => res.json());
-    return productsList
+    try {
+        const response = await fetch('/api.php?route=products.php');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const productsList = await response.json();
+        return productsList;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
 }
 
 const categoriesList = await getCategories();

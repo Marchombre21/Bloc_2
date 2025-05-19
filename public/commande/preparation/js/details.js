@@ -4,7 +4,7 @@ const button = document.querySelector('#checked');
 
 const getDetailsOrder = async (number) => {
     try {
-        const response = await fetch(`/api.php?route=orders.php?number=${number}`);
+        const response = await fetch(`/api.php?route=orders.php&number=${number}`);
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
         }
@@ -77,7 +77,7 @@ document.querySelectorAll(".checkbox").forEach(check => {
 
 const updateOrderStatut = async () => {
     try {
-        const response = await fetch(`/api.php?route=orders.php?number=${number}`, {
+        const response = await fetch(`/api.php?route=orders.php&number=${number}`, {
             method: "PATCH"
         });
         

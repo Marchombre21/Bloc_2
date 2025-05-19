@@ -39,7 +39,9 @@ body {
 }
 
 .yellowButton {
-  color: #be761e;
+  color: #333;
+  // color: #be761e;
+  // background-color: #e0b826;
   background-color: #e0b826;
   border: 0.1rem solid black;
   text-decoration: none;
@@ -49,7 +51,7 @@ body {
   margin: 5px 0;
 }
 .yellowButton:hover {
-  color: #e0b826;
+  // color: #e0b826;
   background-color: #eb952c;
 }
 
