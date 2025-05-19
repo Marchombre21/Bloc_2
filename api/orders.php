@@ -8,16 +8,27 @@ $data = json_decode($datas, true);
 // exit();
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        if (isset($_GET["number"])) {
+        try{
+            if (isset($_GET["number"])) {
             $stmt = $db->prepare("select * from order_items where order_number like :number");
             $stmt->bindValue(":number", $_GET["number"]);
             $stmt->execute();
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }else if(isset($_GET["action"])){
+            // echo json_encode('action');
+            $stmt = $db->prepare("select * from orders where isCompleted = 1");
+            $stmt->execute();
+            $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
+            // echo json_encode('tout');
             $stmt = $db->query("SELECT *, TIMESTAMPDIFF(MINUTE, order_date, NOW()) AS time FROM orders ORDER BY time DESC");
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         echo json_encode($orders);
+        }catch(PDOException $e){
+            echo json_encode($e->getMessage());
+        }
+        
         break;
 
     case 'POST':
@@ -71,6 +82,25 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
             header("location: ../../../index.php");
         }
+        break;
+    case 'DELETE':
+        if(isset($_GET["number"]) && !empty($_GET["number"])){
+                try{
+                    $stmt = $db->prepare("delete from orders where order_number = :number");
+                    $stmt->bindValue(":number", $_GET["number"]);
+                     if($stmt->execute()){
+                        echo json_encode(["success" => true]);
+                     }
+                    
+
+                }catch(PDOException $e){
+                    echo json_encode($e->getMessage());
+                }
+
+            }else{
+                    echo json_encode("Aucune commande à valider dans la requête.");
+            }
+            break;
 }
 
 

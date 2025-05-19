@@ -9,8 +9,8 @@ const getWaitingOrders = async () => {
 const orders = await getWaitingOrders();
 
 
-
-const ordersList = orders.map(order => {
+// Même quand la commande est complétée, map va retourner un undefined. Donc je ne peux pas jouer sur la taille du tableau pour savoir s'il y a des commandes à valider.
+let ordersList = orders.map(order => {
     if (order.isCompleted === 0) {
         return (
             `
@@ -19,9 +19,15 @@ const ordersList = orders.map(order => {
         )
     }
 
-})
+}).filter(element => element != undefined);
 
-list.innerHTML = ordersList.join("");
+if(ordersList.length === 0){
+    list.innerText = "Aucune commande à préparer."
+}else{
+    list.innerHTML = ordersList.join("");
+}
+
+
 
 // const orders2 = document.querySelectorAll("button[type='button']");
 // orders2.forEach(item => {

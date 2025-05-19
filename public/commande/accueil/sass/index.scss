@@ -2,7 +2,7 @@
 
 body {
     font-size: 1.6rem;
-    background-image: url("../img/images/mc_landing_banner.png");
+    background-image: url("../../../img/images/mc_landing_banner.png");
     background-position: top;
     background-repeat: no-repeat;
     height: 100dvh;
@@ -29,7 +29,6 @@ body {
 
         figure {
             height: 75%;
-
             figcaption {
                 font-size: 20px;
             }
@@ -43,6 +42,13 @@ body {
 
 .marginY {
     margin: 3rem 0;
+}
+
+
+main  {
+  div.overflow-auto{
+    max-height: 40vh;
+  }
 }
 
 @media (orientation: landscape) {

@@ -1,5 +1,4 @@
 @import "./common.css";
-
 body {
   font-size: 1.6rem;
   background-image: url("../../../img/images/mc_landing_banner.png");
@@ -38,6 +37,10 @@ body {
 
 .marginY {
   margin: 3rem 0;
+}
+
+main div.overflow-auto {
+  max-height: 40vh;
 }
 
 @media (orientation: landscape) {

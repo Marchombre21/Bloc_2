@@ -41,4 +41,29 @@ a {
   color: inherit;
 }
 
+nav {
+  background-color: transparent;
+  margin: 15px;
+}
+
+nav button {
+  color: #e0b826;
+  background-color: #da8621;
+  border: 0.1rem solid 1px;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  font-weight: bold;
+}
+
+nav button:hover {
+  color: #da8621;
+  background-color: #e0b826;
+  border: black 1px solid;
+}
+
+nav img {
+  width: clamp(30px, 20%, 50px);
+  filter: invert(1);
+}
+
 /*# sourceMappingURL=common.css.map */

@@ -6,20 +6,9 @@ localStorage.setItem
 const typeOrder = new URLSearchParams(window.location.search);
 const order = document.getElementById("order");
 let result = 0;
+let buttonPay;
 
-export const addToResult = (price, number = 1) => {
-  // const firstOperation = (Math.floor(Number(price) * 100)) * number / 100;
-  // result += Number(firstOperation.toFixed(2))
 
-  //Seul moyen de réussir à avoir les bons résultats. Le math.floor ne suffisait pas pour les multiples de 3. J'avais plein de chiffres après la virgule.
-  const convertCents = Math.round(Number(price) * 100);
-  const total = convertCents * number;
-  result = Math.round((result * 100) + total) / 100
-};
-
-export const substractFromResult = (price) => {
-  result = Math.max(Math.floor((result - Number(price)) * 100) / 100, 0)
-}
 
 export const updateOrder = () => {
   const listMenus = orderContentMenu.map((item, index) => {
@@ -111,7 +100,23 @@ export const updateOrder = () => {
     localStorage.setItem("order", JSON.stringify(finalOrder))
     window.location.href = "./paiement.html"
   })
+  buttonPay = document.querySelector("#pay");
+  buttonPay.disabled = (result === 0);
 }
 
-
 updateOrder();
+export const addToResult = (price, number = 1) => {
+  // const firstOperation = (Math.floor(Number(price) * 100)) * number / 100;
+  // result += Number(firstOperation.toFixed(2))
+
+  //Seul moyen de réussir à avoir les bons résultats. Le math.floor ne suffisait pas pour les multiples de 3. J'avais plein de chiffres après la virgule.
+  const convertCents = Math.round(Number(price) * 100);
+  const total = convertCents * number;
+  result = Math.round((result * 100) + total) / 100;
+  
+};
+
+export const substractFromResult = (price) => {
+  result = Math.max(Math.floor((result - Number(price)) * 100) / 100, 0);
+  
+}
