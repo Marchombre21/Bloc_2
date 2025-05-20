@@ -44,6 +44,11 @@ $pages = [
         "controller"=> "NewController",
         "view"=> "NewView"
     ],
+    "changes"=> [
+        "model"=> "ChangesModel",
+        "controller"=> "ChangesController",
+        "view"=> "ChangesView"
+    ],
 ];
 
 $find = false;
@@ -80,6 +85,12 @@ if ($find) {
 
     if (isset($_SESSION["exists"])) {
         unset($_SESSION["exists"]);
+    }
+    if (isset($_SESSION["send"])) {
+        unset($_SESSION["send"]);
+    }
+    if (isset($_SESSION["resetPage"])) {
+        unset($_SESSION["resetPage"]);
     }
 }
 ?>

@@ -51,8 +51,13 @@
     animation: shadow 0.6s 1 linear forwards;
     position: relative;
     overflow: hidden;
-    &:hover{
+    &:not(:disabled):hover{
         transform: scale(1.1);
+    }
+    p.text-danger{
+        color: red;
+        transform: rotateZ(45deg) translate(-35%, 200%);
+        font-size:clamp(16px, 3vw, 24px);
     }
 }
 
@@ -134,17 +139,9 @@ section div header {
     white-space: nowrap;
 }
 
-/* 
-#order figure:not(:first-of-type){
-    width: 100%;
-    margin: 0;
-    flex-shrink: 0;
-} */
-
 .borderOrder {
     border-bottom: 1px solid black;
     margin: 10px 0;
-    /* white-space: nowrap; */
 }
 
 #counter{
@@ -232,9 +229,6 @@ section div header {
     background-color: white;
     border-radius: 15px;
     text-align: center;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-between; */
     padding: 20px;
     position: relative;
 

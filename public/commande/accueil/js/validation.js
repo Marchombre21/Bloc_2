@@ -41,7 +41,7 @@ if (validOrders.length === 0) {
 
 const radios = document.querySelectorAll(".radio");
 radios.forEach(check => {
-    check.addEventListener("change", (e) => {
+    check.addEventListener("change", () => {
         radios.forEach(radio => {
             if (radio.checked) {
                 radio.closest("tr").style.backgroundColor = "green";

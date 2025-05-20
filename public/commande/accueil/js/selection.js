@@ -10,82 +10,6 @@ import { orderContent, updateOrder, addToResult, substractFromResult } from './o
 import { backgroundClick, openDrinksWindow, openMenusWindow } from './modal.js';
 import { orderContentMenu } from "./order.js";
 
-
-
-// const presentationCategorie = {
-//     menus: "Un sandwich, une friture ou une salade et une boisson.",
-//     boissons: "Une petite soif, sucrée, légère et rafraîchissante!",
-//     burgers: "Un délicieux problème de cholestérol enrobé de sauces très sucrées pour que les enfants en mangent.",
-//     frites: "Croustillantes si elles n'avaient pas été tellement baignées dans l'huile qu'elles en gouttent encore.",
-//     encas: "Pour ceux qui ont faim mais pas trop.",
-//     wraps: "Laissez-vous wrapper!",
-//     salades: "Aller au Wacdo pour une salade c'est comme aller dans une maison close pour un calin.",
-//     desserts: "Encore un peu de sucre?",
-//     sauces: "Au cas où il n'y en ait pas assez."
-// };
-
-const presentationCategorie = {
-    "1": ["menus", "Un sandwich, une friture ou une salade et une boisson."],
-    "2": ["boissons", "Une petite soif, sucrée, légère et rafraîchissante!"],
-    "3": ["burgers", "Un délicieux problème de cholestérol enrobé de sauces très sucrées pour que les enfants en mangent."],
-    "4": ["frites", "Croustillantes si elles n'avaient pas été tellement baignées dans l'huile qu'elles en gouttent encore."],
-    "5": ["encas", "Pour ceux qui ont faim mais pas trop."],
-    "6": ["wraps", "Laissez-vous wrapper!"],
-    "7": ["salades", "Aller au Wacdo pour une salade c'est comme aller dans une maison close pour un calin."],
-    "8": ["desserts", "Encore un peu de sucre?"],
-    "9": ["sauces", "Au cas où il n'y en ait pas assez."],
-};
-
-
-
-// const contentModal = {
-//     menus: {
-//         1: {
-//             title: "Une grosse faim?",
-//             sentence: "Le menu maxi Best Of comprend un sandwich, une grande frite et une boisson 50 Cl (+ 2 €)",
-//             images: {
-//                 image1: "../img/images/illustration-maxi-best-of.png",
-//                 image2: "../img/images/illustration-best-of.png"
-//             },
-//             imageTitle: {
-//                 title1: "Menu Maxi Best Of",
-//                 title2: "Menu Best Of"
-//             },
-//             button: "Étape suivante"
-//         },
-//         2: {
-//             title: "Choisissez votre accompagnement",
-//             sentence: "Frites, potatoes, la pomme de terre dans tous ses états",
-//             images: {
-//                 image1: "../img/frites/MOYENNE_FRITE.png",
-//                 image2: "../img/frites/GRANDE_POTATOES.png"
-//             },
-//             imageTitle: {
-//                 title1: "Frites",
-//                 title2: "Potatoes"
-//             },
-//             button: "Étape suivante"
-//         },
-//         3: {
-//             title: "Choisissez votre boisson",
-//             sentence: "Un soda , un jus de fruit ou un verre d’eau pour accompagner votre repas",
-//             button: "Ajouter le menu à ma commande"
-//         }
-//     },
-//     boissons: {
-//         title: "Une petite soif?",
-//         sentence: "Choisissez la taille de votre boisson, +0.50€ pour le format 50 Cl",
-//         imageTitle: {
-//             title1: "30Cl",
-//             title2: "50Cl"
-//         },
-//         button: {
-//             button1: "Annuler",
-//             button2: "Ajouter à ma commande"
-//         }
-//     }
-// };
-
 const getCategories = async () => {
     try{
         const categories = await fetch("/api.php?route=categories.php").then(res => res.json())
@@ -160,78 +84,21 @@ backgroundModal.addEventListener("click", () => {
 
 })
 
-// let step = 0;
-
-// const openMenusWindow = (name, price) => {
-//     step++;
-//     let contentChoice = "";
-
-//     if (step === 1 || step === 2) {
-//         // &times; code natif d'html pour faire le signe de la multiplication.
-//         contentChoice = `
-//         <span id="closeButton" class="close">&times;</span>
-//         <form action="" methode="get">
-//         <header>
-//             <h1>${contentModal[chosenCategorie][step].title}</h1>
-//             <p>${contentModal[chosenCategorie][step].sentence}</p>
-//         </header>
-//             <div>
-//                 <fieldset>
-//                     <label for="maxi">
-//                         <input type="radio" id="maxi" value="maxi" name="size">
-//                         <figure><img src="${contentModal[chosenCategorie][step]["images"].image1}" alt=""></figure>
-//                         <span>${contentModal[chosenCategorie][step]["imageTitle"].title1}</span>
-//                     </label>
-//                 </fieldset>
-//                 <fieldset>
-//                     <label for="best">
-//                         <input type="radio" id="best" value="best" name="size">
-//                         <figure><img src="${contentModal[chosenCategorie][step]["images"].image2}" alt=""></figure>
-//                         <span>${contentModal[chosenCategorie][step]["imageTitle"].title2}</span>
-//                     </label>
-//                 </fieldset>
-//             </div>
-
-//             <button type="submit">${contentModal[chosenCategorie][step].button}</button>
-//         </form>
-
-//         `
-//     }
-//     modal.innerHTML = contentChoice;
-//     backgroundModal.addEventListener("click", () => {
-//         backgroundModal.style.display = "none";
-//         step = 0
-//     })
-//     const closeButton = modal.querySelector("#closeButton").addEventListener("click", () => {
-//         backgroundModal.style.display = "none";
-//         step = 0
-//     })
-//     modal.addEventListener("click", (e) => {
-//         // Astuce de chatGPT pour éviter que le clic ne remonte jusqu'à son parent qui, lui, ferme la modale quand on clique dessus.
-//         e.stopPropagation();
-//     })
-//     const figures = modal.querySelectorAll("figure");
-//     figures.forEach(figure => {
-//         figure.addEventListener("click", () => {
-//             figures.forEach(item => {
-//                 item.classList.remove("selected")
-//             })
-//             figure.classList.add("selected")
-//         })
-//     });
-
-
-// }
-
 const setCurrentCategorieContent = () => {
+    const categoryDatas = categoriesList.find(element => element.id == chosenCategorie);
     headerProducts.innerHTML = `
-    <h1>Nos ${presentationCategorie[chosenCategorie][0]}</h1> 
-    <p>${presentationCategorie[chosenCategorie][1]}</p>
+    <h1>Nos ${categoryDatas.name}</h1> 
+    <p>${categoryDatas.description}</p>
     `
     let content = "";
     currentCategorieContent.forEach(product => {
+        const disabled = product.available === 0 ? "disabled" : "";
+        let message = "";
+        if(product.available === 0){
+            message = "INDISPONIBLE";
+        }
         content += `
-        <button class="productButton" data-image="${product.image}" data-name="${product.name}" data-price="${product.price}">
+        <button class="productButton relative" ${disabled} data-image="${product.image}" data-name="${product.name}" data-price="${product.price}">
           <figure>
             <img src="../../../img/${product.image}" alt="${product.name}-logo">
             <figcaption>
@@ -239,6 +106,7 @@ const setCurrentCategorieContent = () => {
                 <p>${product.price} €</p>
             </figcaption>
           </figure>
+          <p class="absoluteCenter text-danger">${message}</p>
         </button>
     `
     })

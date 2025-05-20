@@ -54,6 +54,77 @@ if ($datas === []) {
             </form>
         </main>
         <?php
+    } else if (isset($_GET["name"]) && $_GET["name"] != "description") {
+        ?>
+            <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
+                <figure class="text-center">
+                    <img class="w-25" src="./img/images/logo.png" alt="logo">
+                </figure>
+                <h1>Modifiez les champs que vous souhaitez</h1>
+                <?php
+                if (isset($_SESSION["changes"]["errors"])) {
+                    ?>
+                    <p class="text-danger"> <?= $_SESSION["changes"]["errors"] ?></p>
+                <?php
+                }
+                //enctype="multipart/form-data" nécessaire à tout formulaire qui veut envoyer des fichiers.
+                ?>
+                <form action="index.php?page=edit&target=product&id=<?= $datas["id"] ?>" enctype="multipart/form-data" method="POST"
+                    class="container">
+                    <div class="row row-cols-1">
+                        <div class="col form-create">
+                            <label for="image">Image : </label>
+                            <input type="file" name="image" id="image">
+                        </div>
+                        <div class="col form-create">
+                            <label for="name">Nom du produit : </label>
+                            <input type="text" name="name" id="name" value="<?= $_SESSION["changes"]["name"] ?? $datas["name"] ?>">
+                        </div>
+                        <div class="col form-create">
+                            <label for="price">Prix : </label>
+                            <input type="number" name="price" id="price"
+                                value="<?= $_SESSION["changes"]["price"] ?? $datas["price"] ?>">
+                        </div>
+                        <div class="col form-create">
+                            <label for="available">Disponible : </label>
+                            <select name="available" id="available">
+                                <option <?php $datas["available"] === 1 ? "selected" : "" ?> value="1">Oui</option>
+                                <option <?php $datas["available"] === 0 ? "selected" : "" ?> value="0">Non</option>
+                            </select>
+                        </div>
+                        <input class="yellowButton" type="submit" value="Appliquer les modifications">
+                    </div>
+
+
+                </form>
+            </main>
+        <?php
+    } else if (isset($_GET["name"]) && $_GET["name"] === "description") {
+        ?>
+                <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
+                    <figure class="text-center">
+                        <img class="w-25" src="./img/images/logo.png" alt="logo">
+                    </figure>
+                    <h1>Écrivez une courte description (max 150 caractères)</h1>
+                <?php
+                if (isset($_SESSION["changes"]["errors"])) {
+                    ?>
+                        <p class="text-danger"> <?= $_SESSION["changes"]["errors"] ?></p>
+                <?php
+                }
+
+                ?>
+                    <form action="index.php?page=edit&target=description" method="POST" class="container">
+                        <div class="row my-5">
+                            <textarea class="col" name="description" id="description"
+                                maxlength="150"><?= $datas["description"] ?></textarea>
+                        </div>
+                        <div class="row">
+                            <input class="col yellowButton" type="submit" value="Valider la description">
+                        </div>
+                    </form>
+                </main>
+        <?php
     }
 
 }

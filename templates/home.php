@@ -6,10 +6,18 @@ require 'header.php';
         <img class="w-25" src="./img/images/logo.png" alt="logo">
     </figure>
     <h1>En tant qu'administrateur vous pouvez : </h1>
-    <button class="yellowButton my-2 my-lg-0">Gérer les produits</button>
-    <button class="yellowButton">Gérer les menus</button>
-    <button class="yellowButton my-2"><a href="index.php?page=users">Gérer les utilisateurs</a></button>
-    <button class="yellowButton"><a href="index.php?page=new">Créer un nouveau compte utilisateur</a></button>
+    <div class="container">
+        <div class="row">
+            <a class="yellowButton my-2 my-lg-0 col" href="index.php?page=changes">Modifier des produits</a>
+        </div>
+        <div class="row">
+            <a class="yellowButton col" href="index.php?page=new">Créer un nouveau compte utilisateur</a>
+        </div>
+        <div class="row">
+            <a class="yellowButton my-2 col" href="index.php?page=users">Gérer les utilisateurs</a>
+        </div>
+    </div>
+
 </main>
 </body>
 

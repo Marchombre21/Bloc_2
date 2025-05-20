@@ -42,7 +42,7 @@ class ResetController
                 $newEmail->isHTML(true);
                 $newEmail->Subject = "Réinitialisation du mot de passe";
                 $newEmail->CharSet = "UTF_8";
-                $newEmail->Body = "<a href=\"http://localhost/Bloc_2/public/index.php?page=reset&token={$token}\">Réinitialiser votre mot de passe</a>";
+                $newEmail->Body = "<a href=\"http://localhost:8000/index.php?page=reset&token={$token}\">Réinitialiser votre mot de passe</a>";
                 if ($newEmail->send()) {
                     $_SESSION["send"] = "Un lien de réinitialisation vous a été envoyé par email. Il sera désactivé dans 15 minutes pour des raisons de sécurité.";
                     header("location: index.php?page=reset");
