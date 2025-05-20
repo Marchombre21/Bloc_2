@@ -46,13 +46,20 @@ class EditModel
 
     public function applyEditsUser($firstname, $lastname, $email, $function, $id): bool
     {
-        $query = $this->db->prepare("update users set firstname = :firstname, lastname = :lastname, email = :email, function = :function where id like :id");
+        try{
+             $query = $this->db->prepare("update users set firstname = :firstname, lastname = :lastname, email = :email, function = :function where id like :id");
         $query->bindValue(":firstname", $firstname);
         $query->bindValue(":lastname", $lastname);
         $query->bindValue(":email", $email);
         $query->bindValue(":function", $function);
         $query->bindValue(":id", $id);
         return $query->execute();
+        } catch (PDOException $e) {
+            $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
+            error_log($e->getMessage());
+            return false;
+        }
+       
     }
 
     public function getOldImage($name): array
@@ -64,8 +71,15 @@ class EditModel
 
     public function updatePath($fileName, $id)
     {
-        $query = $this->db->prepare("UPDATE products SET image = :image WHERE id = :id");
+        try{
+            $query = $this->db->prepare("UPDATE products SET image = :image WHERE id = :id");
         $query->execute(['image' => $fileName, 'id' => $id]);
+        } catch (PDOException $e) {
+            $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
+            error_log($e->getMessage());
+            return false;
+        }
+        
     }
 
     public function getDescription($category){

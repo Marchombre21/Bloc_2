@@ -17,10 +17,11 @@ if (isset($_GET["category"])) {
                 foreach ($datas as $data) {
                     ?>
                     <div class="col text-center ">
-                        <a href="index.php?page=edit&name=<?= $data["name"] ?>">
+                        <a href="index.php?page=edit&name=<?= urlencode($data["name"]) ?>">
                             <figure>
-                                <img src="/img<?= $data["image"] ?>" alt="image <?= $data["name"] ?>">
-                                <figcaption><?= $data["name"] ?></figcaption>
+                                <img src="/img<?= htmlspecialchars($data["name"], ENT_QUOTES) ?>"
+                                    alt="image <?= htmlspecialchars($data["name"], ENT_QUOTES) ?>">
+                                <figcaption><?= htmlspecialchars($data["name"], ENT_QUOTES) ?></figcaption>
                             </figure>
                         </a>
                     </div>
@@ -45,7 +46,8 @@ if (isset($_GET["category"])) {
                 ?>
                 <div class="row row-cols-1 yellowButton">
                     <div class="col">
-                        <a href="index.php?page=changes&category=<?= $data["id"] ?>&categoryName=<?= $data["name"] ?>"><?= $data["name"] ?></a>
+                        <a
+                            href="index.php?page=changes&category=<?= $data["id"] ?>&categoryName=<?= $data["name"] ?>"><?= $data["name"] ?></a>
                     </div>
                 </div>
                 <?php

@@ -67,6 +67,7 @@ if ($datas === []) {
                     <p class="text-danger"> <?= $_SESSION["changes"]["errors"] ?></p>
                 <?php
                 }
+                
                 //enctype="multipart/form-data" nécessaire à tout formulaire qui veut envoyer des fichiers.
                 ?>
                 <form action="index.php?page=edit&target=product&id=<?= $datas["id"] ?>" enctype="multipart/form-data" method="POST"
@@ -74,7 +75,7 @@ if ($datas === []) {
                     <div class="row row-cols-1">
                         <div class="col form-create">
                             <label for="image">Image : </label>
-                            <input type="file" name="image" id="image">
+                            <input type="file" name="image" id="image" accept="image/*">
                         </div>
                         <div class="col form-create">
                             <label for="name">Nom du produit : </label>
@@ -82,14 +83,14 @@ if ($datas === []) {
                         </div>
                         <div class="col form-create">
                             <label for="price">Prix : </label>
-                            <input type="number" name="price" id="price"
+                            <input type="number" name="price" id="price" min="0" step="0.01"
                                 value="<?= $_SESSION["changes"]["price"] ?? $datas["price"] ?>">
                         </div>
                         <div class="col form-create">
                             <label for="available">Disponible : </label>
                             <select name="available" id="available">
-                                <option <?php $datas["available"] === 1 ? "selected" : "" ?> value="1">Oui</option>
-                                <option <?php $datas["available"] === 0 ? "selected" : "" ?> value="0">Non</option>
+                                <option <?= $datas["available"] === 1 ? "selected" : "" ?> value="1">Oui</option>
+                                <option <?= $datas["available"] === 0 ? "selected" : "" ?> value="0">Non</option>
                             </select>
                         </div>
                         <input class="yellowButton" type="submit" value="Appliquer les modifications">

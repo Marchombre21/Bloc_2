@@ -1,5 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
+session_start();
+?>
+ <!DOCTYPE html>
+ <html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
@@ -26,15 +29,15 @@
   <form action="" method="post">
     <fieldset class="d-flex justify-content-between">
       <label for="lastname">Nom: </label>
-      <input name="lastname" value="<?php $_SESSION["loginPage"]["loginLastname"] ?? ""?>" type="text" id="lastname">
+      <input name="lastname" value="<?= $_SESSION["loginPage"]["loginLastname"] ?? ""?>" type="text" id="lastname">
     </fieldset>
     <fieldset class="d-flex justify-content-between">
       <label for="firstname">Prénom: </label>
-      <input name="firstname" value="<?php $_SESSION["loginPage"]["loginFirstname"] ?? ""?>" type="text" id="firstname">
+      <input name="firstname" value="<?= $_SESSION["loginPage"]["loginFirstname"] ?? ""?>" type="text" id="firstname">
     </fieldset>
     <fieldset class="d-flex justify-content-between">
       <label for="password">Mot de passe: </label>
-      <input name='password' value="<?php $_SESSION["loginPage"]["loginPassword"] ?? ""?>" type="password" id="password">
+      <input name='password' value="<?= $_SESSION["loginPage"]["loginPassword"] ?? ""?>" type="password" id="password">
     </fieldset>
   <input class="yellowButton mt-3" type="submit" value="Se connecter">
   </form>

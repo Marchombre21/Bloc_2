@@ -1,10 +1,10 @@
 <?php
 
-class CHangesModel{
+class ChangesModel{
     public $db;
 
     public function __construct(Pdo $db){
-        $this->db = $db;
+$this->db = $db;
         
     }
 
@@ -17,13 +17,15 @@ class CHangesModel{
 
     }
 
-    public function getDatasCategory($categorie){
-        $query = $this->db->prepare("select * from products where category like :id");
-        $query->bindValue(":id", $categorie);
+    public function getProductsByCategory(string $category): array {
+        $query = $this->db->prepare("SELECT * FROM products WHERE category = :category");
+        $query->bindValue(":category", $category);
         $query->execute();
+        if($query === false){
+            return [];
+        }
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
 }
-?>

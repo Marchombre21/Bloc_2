@@ -65,20 +65,32 @@ class EditController
                     // ] comme ça.
                     if (!empty($_POST["name"]) && !empty($_POST["price"]) && isset($_GET["id"]) && !empty($_GET["id"])) {
                         if (!empty($_FILES['image']['name'])) {
-                            $id = $_GET["id"];
-                            $category = $_SESSION["changes"]["categoryName"];
-                            $oldImage = $this->model->getOldImage($_SESSION["changes"]["name"]);
-                            $oldPath = 'img' . $oldImage['image'];
-                            if (file_exists($oldPath)) {
-                                unlink($oldPath);
-                            }
-                            $targetDir = '../public/img';
-                            $fileName = "/" . $category . "/" . uniqid() . '-' . basename($_FILES['image']['name']);
-                            $targetFilePath = $targetDir . $fileName;
-                            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
-                                $this->model->updatePath($fileName, $id);
+                            $tmpFilePath = $_FILES['image']['tmp_name'];
+                            $mimeType = mime_content_type($tmpFilePath);
+                            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
+                            if (in_array($mimeType, $allowedTypes)) {
+                                $id = $_GET["id"];
+                                $category = $_SESSION["changes"]["categoryName"];
+                                $oldImage = $this->model->getOldImage($_SESSION["changes"]["name"]);
+                                $oldPath = 'img' . $oldImage['image'];
+                                if (file_exists($oldPath)) {
+                                    unlink($oldPath);
+                                }
+                                $targetDir = '../public/img';
+                                $fileName = "/" . $category . "/" . uniqid() . '-' . basename($_FILES['image']['name']);
+                                $targetFilePath = $targetDir . $fileName;
+                                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
+                                    $this->model->updatePath($fileName, $id);
+
+                                }
+                            } else {
+                                $_SESSION["changes"]["errors"] = "Une erreur est survenue lors de la modification.";
+                                $name = $_SESSION["changes"]["name"];
+                                header("location:index.php?page=edit&name=$name");
+                                exit();
                             }
+
                         }
 
                         $id = trim(strip_tags($_GET["id"]));
@@ -106,14 +118,14 @@ class EditController
                 if (isset($_POST["description"]) && !empty($_POST["description"])) {
                     $description = trim(strip_tags($_POST["description"]));
                     $edited = $this->model->updateDescription($description, $_SESSION["changes"]["category"]);
-                    if($edited){
+                    if ($edited) {
                         unset($_SESSION["changes"]);
                         header("location: index.php?page=home");
                         exit();
                     }
                 }
             }
-        }else{
+        } else {
             header("location: index.php?page=login");
             exit();
         }

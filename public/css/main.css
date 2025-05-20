@@ -69,7 +69,7 @@ nav {
 nav button {
   color: #e0b826;
   background-color: #da8621;
-  border: 0.1rem solid 1px;
+  border: 0.1rem solid black;
   text-decoration: none;
   padding: 1rem 1.5rem;
   font-weight: bold;

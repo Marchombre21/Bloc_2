@@ -9,7 +9,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         try {
             if (isset($_GET["number"])) {
-                $stmt = $db->prepare("select * from order_items where order_number like :number");
+                $stmt = $db->prepare("SELECT * FROM order_items WHERE order_number = :number");
                 $stmt->bindValue(":number", $_GET["number"]);
                 $stmt->execute();
                 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -67,7 +67,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "PREP") {
             if (isset($_GET["number"]) && !empty($_GET["number"])) {
                 try {
-                    $stmt = $db->prepare("update orders set isCompleted = true where order_number like :number");
+                    $stmt = $db->prepare("update orders set isCompleted = true where order_number = :number");
                     $stmt->bindValue(":number", $_GET["number"]);
                     $stmt->execute();
                     echo json_encode(["success" => true]);
@@ -77,7 +77,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
             }
         } else {
-
             header("location: ../../../index.php");
         }
         break;

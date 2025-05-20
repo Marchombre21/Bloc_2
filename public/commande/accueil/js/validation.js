@@ -57,13 +57,25 @@ radios.forEach(check => {
 let message = "";
 
 const deleteOrder = async (number) => {
-    const answer = await fetch(`/api.php?route=orders.php&number=${number}`, {
-        method: "DELETE"
-    }).then(res => res.json());
-    if(answer.success){
-        return true;
-    }else{
-        message = answer.message || "Erreur inconnue";
+    try {
+        const response = await fetch(`/api.php?route=orders.php&number=${number}`, {
+            method: "DELETE"
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const answer = await response.json();
+        
+        if (answer.success) {
+            return true;
+        } else {
+            console.error(answer.error);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error deleting order:', error);
         return false;
     }
 }

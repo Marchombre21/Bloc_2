@@ -1,4 +1,5 @@
 <?php
+session_start();
 $path = $_GET['route'] ?? '';
 
  // Alors là c'est 100% codeRabbit. 
@@ -7,6 +8,15 @@ $path = $_GET['route'] ?? '';
      echo "Invalid request";
      exit;
  }
+
+ $protected_routes = ['orders.php', 'categories.php', 'products.php'];
+
+if (in_array($path, $protected_routes) && (!isset($_SESSION['user']) || empty($_SESSION['user']))) {
+    http_response_code(401);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Unauthorized', 'status' => 401]);
+    exit();
+}
 
 $file = realpath(__DIR__ . '/../api/' . $path);
  $apiDir = realpath(__DIR__ . '/../api/');
