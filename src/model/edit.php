@@ -6,7 +6,7 @@ class EditModel
 {
     public $db;
 
-    public function __construct(Pdo $db)
+    public function __construct(PDO $db)
     {
         $this->db = $db;
 
@@ -14,14 +14,14 @@ class EditModel
 
     public function getDatasUser($id): array
     {
-        $query = $this->db->prepare("select * from users where id like :id");
+        $query = $this->db->prepare("select * from users where id = :id");
         $query->bindValue(":id", $id);
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     public function getDatasProduct($name)
     {
-        $query = $this->db->prepare("select * from products where name like :name");
+        $query = $this->db->prepare("select * from products where name = :name");
         $query->bindValue(":name", $name);
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
@@ -30,7 +30,7 @@ class EditModel
     public function applyEditsProducts($name, $price, $id, $available): bool
     {
         try {
-            $query = $this->db->prepare("update products set name = :name, price = :price, available = :available where id like :id");
+            $query = $this->db->prepare("update products set name = :name, price = :price, available = :available where id = :id");
             $query->bindValue(":name", $name);
             $query->bindValue(":price", $price);
             $query->bindValue(":available", $available);
@@ -73,9 +73,8 @@ class EditModel
     {
         try {
             $query = $this->db->prepare("UPDATE products SET image = :image WHERE id = :id");
-            $query->execute(['image' => $fileName, 'id' => $id]);
+            return $query->execute(['image' => $fileName, 'id' => $id]);
         } catch (PDOException $e) {
-            $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
             error_log($e->getMessage());
             return false;
         }
@@ -107,7 +106,6 @@ class EditModel
             $query = $this->db->prepare("delete from products where id = :id");
             return $query->execute(["id" => $id]);
         } catch (PDOException $e) {
-            echo 'coucou';
             error_log($e->getMessage(), 3, __DIR__ . "/log_test.txt");
 
             return false;
@@ -127,9 +125,7 @@ class EditModel
             ]);
         } catch (PDOException $e) {
             error_log($e->getMessage(), 3, __DIR__ . "/log_test.txt");
-            $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
-            header("location: index.php?page=edit&add=product");
-            exit();
+            return false;
         }
     }
 

@@ -1,5 +1,6 @@
 <?php
 require_once("../vendor/autoload.php");
+require_once __DIR__ . '/../../config/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -33,10 +34,10 @@ class ResetController
                     $newEmail = new PHPMailer();
                     $newEmail->isSMTP();
                     $newEmail->SMTPAuth = true;
-                    $newEmail->Host = "sandbox.smtp.mailtrap.io";
-                    $newEmail->Port = "2525";
-                    $newEmail->Username = "4a2366424acf9e";
-                    $newEmail->Password = "9758e324a193bc";
+                    $newEmail->Host = MAIL_HOST;
+                    $newEmail->Port = MAIL_PORT;
+                    $newEmail->Username = MAIL_USERNAME;
+                    $newEmail->Password = MAIL_PASSWORD;
                     $newEmail->From = "bruno.fitte@sfr.fr";
                     $newEmail->FromName = "Bruno";
                     $newEmail->addAddress("bruno.fitte@sfr.fr");//Mettre adresse mail de l'admin

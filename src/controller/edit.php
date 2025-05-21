@@ -11,7 +11,7 @@ class EditController
 
     public function getDatas()
     {
-        if (!isset($_SESSION["user"]) || $_SESSION["user"]["function"] != "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
+        if (!isset($_SESSION["user"]) || $_SESSION["user"]["function"] != "ADMIN" || $_SESSION["user"]["ip"] != $_SERVER["REMOTE_ADDR"]) {
             header("location: index.php");
             exit();
         } else {
@@ -35,12 +35,12 @@ class EditController
     {
         if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
             if (isset($_GET["target"]) && $_GET["target"] === "user") {
-                $_SESSION["edit"]["firstname"] = trim(strip_tags($_POST["firstname"]));
-                $_SESSION["edit"]["lastname"] = trim(strip_tags($_POST["lastname"]));
-                $_SESSION["edit"]["email"] = trim(strip_tags($_POST["email"]));
-                $_SESSION["edit"]["function"] = trim(strip_tags($_POST["function"]));
-
+                
                 if (!empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["email"]) && !empty($_POST["function"])) {
+                    $_SESSION["edit"]["firstname"] = trim(strip_tags($_POST["firstname"]));
+                    $_SESSION["edit"]["lastname"] = trim(strip_tags($_POST["lastname"]));
+                    $_SESSION["edit"]["email"] = trim(strip_tags($_POST["email"]));
+                    $_SESSION["edit"]["function"] = trim(strip_tags($_POST["function"]));
                     $edited = $this->model->applyEditsUser($_SESSION["edit"]["firstname"], $_SESSION["edit"]["lastname"], $_SESSION["edit"]["email"], $_SESSION["edit"]["function"], $_SESSION["edit"]["id"]);
                     if ($edited) {
                         unset($_SESSION["edit"]);
@@ -78,7 +78,13 @@ class EditController
                                 $fileName = "/" . $category . "/" . uniqid() . '-' . basename($_FILES['image']['name']);
                                 $targetFilePath = $targetDir . $fileName;
                                 if (move_uploaded_file($tmpFilePath, $targetFilePath)) {
-                                    $this->model->updatePath($fileName, $id);
+                                    $updated = $this->model->updatePath($fileName, $id);
+                                    if (!$updated) {
+                                        $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
+                                        $name = $_SESSION["changes"]["name"];
+                                        header("location:index.php?page=edit&name=$name");
+                                        exit();
+                                    }
 
                                 }
                             } else {
@@ -148,9 +154,13 @@ class EditController
                         $targetFilePath = $targetDir . $fileName;
                         if (move_uploaded_file($tmpFilePath, $targetFilePath)) {
                             $edited = $this->model->addProduct($fileName, $name, $price, $category, $available);
-                            if($edited){
+                            if ($edited) {
                                 unset($_SESSION["changes"]);
                                 header("location: index.php?page=home");
+                                exit();
+                            } else {
+                                $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
+                                header("location: index.php?page=edit&add=product");
                                 exit();
                             }
 
@@ -164,8 +174,8 @@ class EditController
 
 
                 } else {
-                    $_SESSION["changes"]["name"] = trim(strip_tags($_POST["name"])) || "";
-                    $_SESSION["changes"]["price"] = trim(strip_tags($_POST["price"])) || "";
+                    $_SESSION["changes"]["name"] = trim(strip_tags($_POST["name"])) ?? "";
+                    $_SESSION["changes"]["price"] = trim(strip_tags($_POST["price"])) ?? "";
                     $_SESSION["changes"]["errors"] = "Tous les champs doivent être remplis!";
                     header("location: index.php?page=edit&add=product");
                     exit();
