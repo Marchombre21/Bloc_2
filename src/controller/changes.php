@@ -11,7 +11,7 @@ class ChangesController
 
     public function getDatas()
     {
-        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN") {
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
             if (isset($_GET["category"]) && !empty($_GET["category"])) {
                 $_SESSION["changes"]["category"] = $_GET["category"];
                 $_SESSION["changes"]["categoryName"]= $_GET["categoryName"];

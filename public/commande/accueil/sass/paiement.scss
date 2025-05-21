@@ -1,20 +1,5 @@
-@import "./common.css";
-/* @font-face {
-    font-family: 'Caveat';
-    src: url();
-} */
-
-body {
-    font-size: 1.6rem;
-    background-image: url("../img/images/mc_landing_banner.png");
-    background-position: top;
-    background-repeat: no-repeat;
-    /* height: 100dvh; */
-    /* background-size: 100vw; */
-}
-
 figure {
-    width: clamp(100px, 20%, 200px);
+    width: clamp(150px, 20%, 200px);
     margin: 10vh auto;
 
     img {
@@ -40,9 +25,9 @@ main {
     }
 
     input {
-        width: 10rem;
-        height: 10rem;
-        font-size: 10rem;
+        width: clamp(2rem, 20vw, 10rem);
+        height: clamp(2rem, 20vw, 10rem);
+        font-size: clamp(2rem, 10vw, 10rem);
         text-align: center;
         border: none;
         border-bottom: 2px solid #ccc;

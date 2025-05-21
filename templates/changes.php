@@ -9,8 +9,9 @@ if (isset($_GET["category"])) {
         <h1>Que voulez-vous changer dans cette catégorie?</h1>
 
         <div class="container text-center overflow-auto">
-            <div class="row">
-                <a class="yellowButton" href="index.php?page=edit&name=description">Modifier la description</a>
+            <div class="row row-cols-1 row-cols-md-2">
+                <a class="yellowButton col" href="index.php?page=edit&name=description">Modifier la description</a>
+                <a class="yellowButton col " href="index.php?page=edit&add=product">Ajouter un produit</a>
             </div>
             <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5">
                 <?php
@@ -19,7 +20,7 @@ if (isset($_GET["category"])) {
                     <div class="col text-center ">
                         <a href="index.php?page=edit&name=<?= urlencode($data["name"]) ?>">
                             <figure>
-                                <img src="/img<?= htmlspecialchars($data["name"], ENT_QUOTES) ?>"
+                                <img src="/img<?= htmlspecialchars($data["image"], ENT_QUOTES) ?>"
                                     alt="image <?= htmlspecialchars($data["name"], ENT_QUOTES) ?>">
                                 <figcaption><?= htmlspecialchars($data["name"], ENT_QUOTES) ?></figcaption>
                             </figure>

@@ -11,7 +11,7 @@ class EditController
 
     public function getDatas()
     {
-        if (!isset($_SESSION["user"]) || $_SESSION["user"]["function"] != "ADMIN") {
+        if (!isset($_SESSION["user"]) || $_SESSION["user"]["function"] != "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
             header("location: index.php");
             exit();
         } else {
@@ -22,7 +22,6 @@ class EditController
                 if ($_GET["name"] === "description") {
                     return $this->model->getDescription($_SESSION["changes"]["category"]);
                 } else {
-                    // echo 'coucou';
                     $_SESSION['changes']["name"] = trim(strip_tags($_GET["name"]));
                     return $this->model->getDatasProduct($_GET["name"]);
                 }
@@ -34,7 +33,7 @@ class EditController
 
     public function applyEdits()
     {
-        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN") {
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
             if (isset($_GET["target"]) && $_GET["target"] === "user") {
                 $_SESSION["edit"]["firstname"] = trim(strip_tags($_POST["firstname"]));
                 $_SESSION["edit"]["lastname"] = trim(strip_tags($_POST["lastname"]));
@@ -66,10 +65,8 @@ class EditController
                     if (!empty($_POST["name"]) && !empty($_POST["price"]) && isset($_GET["id"]) && !empty($_GET["id"])) {
                         if (!empty($_FILES['image']['name'])) {
                             $tmpFilePath = $_FILES['image']['tmp_name'];
-                            $mimeType = mime_content_type($tmpFilePath);
-                            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
-                            if (in_array($mimeType, $allowedTypes)) {
+                            $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                            if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
                                 $id = $_GET["id"];
                                 $category = $_SESSION["changes"]["categoryName"];
                                 $oldImage = $this->model->getOldImage($_SESSION["changes"]["name"]);
@@ -80,7 +77,7 @@ class EditController
                                 $targetDir = '../public/img';
                                 $fileName = "/" . $category . "/" . uniqid() . '-' . basename($_FILES['image']['name']);
                                 $targetFilePath = $targetDir . $fileName;
-                                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
+                                if (move_uploaded_file($tmpFilePath, $targetFilePath)) {
                                     $this->model->updatePath($fileName, $id);
 
                                 }
@@ -123,6 +120,55 @@ class EditController
                         header("location: index.php?page=home");
                         exit();
                     }
+                }
+            } else if (isset($_GET["target"]) && $_GET["target"] === "delete") {
+                $id = trim(strip_tags($_GET["id"]));
+                $oldImage = $this->model->getOldImage($_SESSION["changes"]["name"]);
+                $oldPath = 'img' . $oldImage['image'];
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+                if ($this->model->deleteProduct($id)) {
+                    unset($_SESSION["changes"]);
+                    header("location: index.php?page=home");
+                    exit();
+                }
+            } else if (isset($_GET["target"]) && $_GET["target"] === "addProduct") {
+                if (!empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["available"]) && !empty($_FILES['image']['name'])) {
+                    $tmpFilePath = $_FILES['image']['tmp_name'];
+                    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                        $category = $_SESSION["changes"]["category"];
+                        $categoryName = $_SESSION["changes"]["categoryName"];
+                        $name = trim(strip_tags($_POST["name"]));
+                        $price = trim(strip_tags($_POST["price"]));
+                        $available = trim(strip_tags($_POST["available"]));
+                        $targetDir = '../public/img';
+                        $fileName = "/" . $categoryName . "/" . uniqid() . '-' . basename($_FILES['image']['name']);
+                        $targetFilePath = $targetDir . $fileName;
+                        if (move_uploaded_file($tmpFilePath, $targetFilePath)) {
+                            $edited = $this->model->addProduct($fileName, $name, $price, $category, $available);
+                            if($edited){
+                                unset($_SESSION["changes"]);
+                                header("location: index.php?page=home");
+                                exit();
+                            }
+
+                        }
+                    } else {
+                        $_SESSION["changes"]["errors"] = "Une erreur est survenue lors de la modification.";
+                        $name = $_SESSION["changes"]["name"];
+                        header("location:index.php?page=edit&name=$name");
+                        exit();
+                    }
+
+
+                } else {
+                    $_SESSION["changes"]["name"] = trim(strip_tags($_POST["name"])) || "";
+                    $_SESSION["changes"]["price"] = trim(strip_tags($_POST["price"])) || "";
+                    $_SESSION["changes"]["errors"] = "Tous les champs doivent être remplis!";
+                    header("location: index.php?page=edit&add=product");
+                    exit();
                 }
             }
         } else {

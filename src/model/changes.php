@@ -17,7 +17,7 @@ $this->db = $db;
 
     }
 
-    public function getProductsByCategory(string $category): array {
+    public function getDatasCategory(string $category): array {
         $query = $this->db->prepare("SELECT * FROM products WHERE category = :category");
         $query->bindValue(":category", $category);
         $query->execute();

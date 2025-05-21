@@ -66,8 +66,6 @@ if ($find) {
     require DIR_MODEL . $_SESSION["page"] . ".php";
     require DIR_CONTROLLER . $_SESSION["page"] . ".php";
     require DIR_VIEW . $_SESSION["page"] . ".php";
-    // $dsn = DB_DSN;
-    // $db = new PDO($dsn, DB_USERNAME, DB_PASSWORD);
 
     $newModel = new $model($db);
     $newController = new $controller($newModel);
@@ -91,6 +89,9 @@ if ($find) {
     }
     if (isset($_SESSION["resetPage"])) {
         unset($_SESSION["resetPage"]);
+    }
+    if (isset($_SESSION["invalid"])) {
+        unset($_SESSION["invalid"]);
     }
 }
 ?>

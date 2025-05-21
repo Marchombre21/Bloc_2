@@ -1,7 +1,7 @@
 <?php
 require 'header.php';
 
-if ($datas === []) {
+if ($datas === [] && !isset($_GET["add"])) {
     ?>
     <h1>Cet élément n'a pas été trouvé dans la base de donnée</h1>
     <?php
@@ -70,6 +70,7 @@ if ($datas === []) {
                 
                 //enctype="multipart/form-data" nécessaire à tout formulaire qui veut envoyer des fichiers.
                 ?>
+                <a class="yellowButton text-nowrap my-2 d-block" onclick="return confirm('Êtes-vous sûr ?');" href="index.php?page=edit&target=delete&id=<?= $datas["id"] ?>">Supprimer complètement ce produit</a>
                 <form action="index.php?page=edit&target=product&id=<?= $datas["id"] ?>" enctype="multipart/form-data" method="POST"
                     class="container">
                     <div class="row row-cols-1">
@@ -126,6 +127,51 @@ if ($datas === []) {
                     </form>
                 </main>
         <?php
+    } else if (isset($_GET["add"]) && $_GET["add"] === "product") {
+        ?>
+        <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
+                <figure class="text-center">
+                    <img class="w-25" src="./img/images/logo.png" alt="logo">
+                </figure>
+                <h1>Remplissez tous les champs</h1>
+                <?php
+                if (isset($_SESSION["changes"]["errors"])) {
+                    ?>
+                    <p class="text-danger"> <?= $_SESSION["changes"]["errors"] ?></p>
+                <?php
+                }
+                
+                ?>
+                <form action="index.php?page=edit&target=addProduct" enctype="multipart/form-data" method="POST"
+                    class="container">
+                    <div class="row row-cols-1">
+                        <div class="col form-create">
+                            <label for="image">Image : </label>
+                            <input type="file" name="image" id="image" accept="image/*">
+                        </div>
+                        <div class="col form-create">
+                            <label for="name">Nom du produit : </label>
+                            <input type="text" name="name" id="name" value="<?= $_SESSION["changes"]["name"] ?? "" ?>">
+                        </div>
+                        <div class="col form-create">
+                            <label for="price">Prix : </label>
+                            <input type="number" name="price" id="price" min="0" step="0.01"
+                                value="<?= $_SESSION["changes"]["price"] ?? "" ?>">
+                        </div>
+                        <div class="col form-create">
+                            <label for="available">Disponible : </label>
+                            <select name="available" id="available">
+                                <option value="1">Oui</option>
+                                <option value="0">Non</option>
+                            </select>
+                        </div>
+                        <input class="yellowButton" type="submit" value="Ajouter le produit">
+                    </div>
+
+
+                </form>
+            </main>
+            <?php
     }
 
 }

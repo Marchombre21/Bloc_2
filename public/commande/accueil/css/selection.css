@@ -1,4 +1,7 @@
-@import './common.css';
+html {
+  background-image: none;
+}
+
 #rightArrow1,
 #rightArrow2 {
   transform: rotateY(180deg);

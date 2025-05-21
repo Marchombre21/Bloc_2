@@ -1,13 +1,3 @@
-@import "./common.css";
-body {
-  font-size: 1.6rem;
-  background-image: url("../../../img/images/mc_landing_banner.png");
-  background-position: top;
-  background-repeat: no-repeat;
-  height: 100dvh;
-  /* background-size: cover; */
-}
-
 #order-type {
   background-color: white;
   text-align: center;
@@ -33,14 +23,6 @@ body {
 }
 #order-type button:hover {
   border-color: #BD0017;
-}
-
-.marginY {
-  margin: 3rem 0;
-}
-
-main div.overflow-auto {
-  max-height: 40vh;
 }
 
 @media (orientation: landscape) {
