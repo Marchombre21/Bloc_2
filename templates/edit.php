@@ -11,7 +11,7 @@ if ($datas === [] && !isset($_GET["add"])) {
         ?>
         <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
             <figure class="text-center">
-                <img class="w-25" src="./img/images/logo.png" alt="logo">
+                <img class="w-25" src="/img/images/logo.png" alt="logo">
             </figure>
             <h1>Modifiez les champs que vous souhaitez</h1>
             <?php
@@ -21,7 +21,7 @@ if ($datas === [] && !isset($_GET["add"])) {
                 <?php
             }
             ?>
-            <form action="index.php?page=edit&target=user" method="POST" class="container">
+            <form action="edit/target/user" method="POST" class="container">
                 <div class="row row-cols-1">
                     <div class="col form-create">
                         <label for="lastname">Nom : </label>
@@ -58,7 +58,7 @@ if ($datas === [] && !isset($_GET["add"])) {
         ?>
             <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
                 <figure class="text-center">
-                    <img class="w-25" src="./img/images/logo.png" alt="logo">
+                    <img class="w-25" src="/img/images/logo.png" alt="logo">
                 </figure>
                 <h1>Modifiez les champs que vous souhaitez</h1>
                 <?php
@@ -71,7 +71,7 @@ if ($datas === [] && !isset($_GET["add"])) {
                 //enctype="multipart/form-data" nécessaire à tout formulaire qui veut envoyer des fichiers.
                 ?>
                 <a class="yellowButton text-nowrap my-2 d-block" onclick="return confirm('Êtes-vous sûr ?');" href="index.php?page=edit&target=delete&id=<?= $datas["id"] ?>">Supprimer complètement ce produit</a>
-                <form action="index.php?page=edit&target=product&id=<?= $datas["id"] ?>" enctype="multipart/form-data" method="POST"
+                <form action="/edit/target/product/id/<?= $datas["id"] ?>" enctype="multipart/form-data" method="POST"
                     class="container">
                     <div class="row row-cols-1">
                         <div class="col form-create">
@@ -105,7 +105,7 @@ if ($datas === [] && !isset($_GET["add"])) {
         ?>
                 <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
                     <figure class="text-center">
-                        <img class="w-25" src="./img/images/logo.png" alt="logo">
+                        <img class="w-25" src="/img/images/logo.png" alt="logo">
                     </figure>
                     <h1>Écrivez une courte description (max 150 caractères)</h1>
                 <?php
@@ -116,7 +116,7 @@ if ($datas === [] && !isset($_GET["add"])) {
                 }
 
                 ?>
-                    <form action="index.php?page=edit&target=description" method="POST" class="container">
+                    <form action="edit/target/description" method="POST" class="container">
                         <div class="row my-5">
                             <textarea class="col" name="description" id="description"
                                 maxlength="150"><?= $datas["description"] ?></textarea>
@@ -131,7 +131,7 @@ if ($datas === [] && !isset($_GET["add"])) {
         ?>
         <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
                 <figure class="text-center">
-                    <img class="w-25" src="./img/images/logo.png" alt="logo">
+                    <img class="w-25" src="/img/images/logo.png" alt="logo">
                 </figure>
                 <h1>Remplissez tous les champs</h1>
                 <?php
@@ -142,7 +142,7 @@ if ($datas === [] && !isset($_GET["add"])) {
                 }
                 
                 ?>
-                <form action="index.php?page=edit&target=addProduct" enctype="multipart/form-data" method="POST"
+                <form action="edit/target/addProduct" enctype="multipart/form-data" method="POST"
                     class="container">
                     <div class="row row-cols-1">
                         <div class="col form-create">

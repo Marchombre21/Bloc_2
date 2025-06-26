@@ -31,11 +31,11 @@ class EditController
         }
     }
 
-    public function applyEdits()
+    public function applyEditsUser()
     {
         if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
             if (isset($_GET["target"]) && $_GET["target"] === "user") {
-                
+
                 if (!empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["email"]) && !empty($_POST["function"])) {
                     $_SESSION["edit"]["firstname"] = trim(strip_tags($_POST["firstname"]));
                     $_SESSION["edit"]["lastname"] = trim(strip_tags($_POST["lastname"]));
@@ -44,16 +44,26 @@ class EditController
                     $edited = $this->model->applyEditsUser($_SESSION["edit"]["firstname"], $_SESSION["edit"]["lastname"], $_SESSION["edit"]["email"], $_SESSION["edit"]["function"], $_SESSION["edit"]["id"]);
                     if ($edited) {
                         unset($_SESSION["edit"]);
-                        header("location: index.php?page=home");
+                        header("location:/home");
                         exit();
                     }
                 } else {
                     $_SESSION["edit"]["errors"] = "Tous les champs doivent être remplis";
                     $id = $_SESSION["edit"]["id"];
-                    header("location:index.php?page=edit&id=$id");
+                    header("location:/edit/id/$id");
                     exit();
                 }
-            } else if (isset($_GET["target"]) && $_GET["target"] === "product") {
+            }
+        } else {
+            header("location:/login");
+            exit();
+        }
+    }
+
+    public function applyEditsProducts()
+    {
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
+            if (isset($_GET["target"]) && $_GET["target"] === "product") {
                 if (isset($_GET["id"]) && !empty($_GET['id'])) {
                     //Les fichiers envoyés via un formulaire ne se récupèrent pas avec get ou post mais bien files. Un fichier envoyé comme ça aura une structure [
                     //   'name' => 'photo.jpg',
@@ -82,7 +92,7 @@ class EditController
                                     if (!$updated) {
                                         $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
                                         $name = $_SESSION["changes"]["name"];
-                                        header("location:index.php?page=edit&name=$name");
+                                        header("location:/edit/name/$name");
                                         exit();
                                     }
 
@@ -90,7 +100,7 @@ class EditController
                             } else {
                                 $_SESSION["changes"]["errors"] = "Une erreur est survenue lors de la modification.";
                                 $name = $_SESSION["changes"]["name"];
-                                header("location:index.php?page=edit&name=$name");
+                                header("location:/edit/name/$name");
                                 exit();
                             }
 
@@ -102,32 +112,50 @@ class EditController
                         $edited = $this->model->applyEditsProducts($newName, $newPrice, $id, $_POST["available"]);
                         if ($edited) {
                             unset($_SESSION["changes"]);
-                            header("location: index.php?page=home");
+                            header("location:/home");
                             exit();
                         } else {
                             $name = $_SESSION["changes"]["name"];
-                            header("location:index.php?page=edit&name=$name");
+                            header("location:/edit/name/$name");
                             exit();
                         }
 
                     } else {
                         $_SESSION["changes"]["errors"] = "Le nom et le prix ne peuvent être vides.";
                         $name = $_SESSION["changes"]["name"];
-                        header("location:index.php?page=edit&name=$name");
+                        header("location:/edit/name/$name");
                         exit();
                     }
                 }
-            } else if (isset($_GET["target"]) && $_GET["target"] === "description") {
-                if (isset($_POST["description"]) && !empty($_POST["description"])) {
-                    $description = trim(strip_tags($_POST["description"]));
-                    $edited = $this->model->updateDescription($description, $_SESSION["changes"]["category"]);
-                    if ($edited) {
-                        unset($_SESSION["changes"]);
-                        header("location: index.php?page=home");
-                        exit();
-                    }
+            }
+        } else {
+            header("location:/login");
+            exit();
+        }
+    }
+
+    public function applyEditsDescription()
+    {
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
+            if (isset($_POST["description"]) && !empty($_POST["description"])) {
+                $description = trim(strip_tags($_POST["description"]));
+                $edited = $this->model->updateDescription($description, $_SESSION["changes"]["category"]);
+                if ($edited) {
+                    unset($_SESSION["changes"]);
+                    header("location:/home");
+                    exit();
                 }
-            } else if (isset($_GET["target"]) && $_GET["target"] === "delete") {
+            }
+        } else {
+            header("location:/login");
+            exit();
+        }
+    }
+
+    public function applyDeleteProduct()
+    {
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
+            if (isset($_GET["target"]) && $_GET["target"] === "delete") {
                 $id = trim(strip_tags($_GET["id"]));
                 $oldImage = $this->model->getOldImage($_SESSION["changes"]["name"]);
                 $oldPath = 'img' . $oldImage['image'];
@@ -136,10 +164,20 @@ class EditController
                 }
                 if ($this->model->deleteProduct($id)) {
                     unset($_SESSION["changes"]);
-                    header("location: index.php?page=home");
+                    header("location:/home");
                     exit();
                 }
-            } else if (isset($_GET["target"]) && $_GET["target"] === "addProduct") {
+            }
+        } else {
+            header("location:/login");
+            exit();
+        }
+    }
+
+    public function applyAddProduct()
+    {
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["function"] === "ADMIN" && $_SESSION["user"]["ip"] === $_SERVER["REMOTE_ADDR"]) {
+            if (isset($_GET["target"]) && $_GET["target"] === "addProduct") {
                 if (!empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["available"]) && !empty($_FILES['image']['name'])) {
                     $tmpFilePath = $_FILES['image']['tmp_name'];
                     $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
@@ -156,19 +194,19 @@ class EditController
                             $edited = $this->model->addProduct($fileName, $name, $price, $category, $available);
                             if ($edited) {
                                 unset($_SESSION["changes"]);
-                                header("location: index.php?page=home");
+                                header("location:/home");
                                 exit();
                             } else {
                                 $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
-                                header("location: index.php?page=edit&add=product");
+                                header("location:/edit/add/product");
                                 exit();
                             }
 
                         }
                     } else {
-                        $_SESSION["changes"]["errors"] = "Une erreur est survenue lors de la modification.";
+                        $_SESSION["changes"]["errors"] = "Une erreur est survenue lors de l'enregistrement (ce type de fichier n'est pas accepté).";
                         $name = $_SESSION["changes"]["name"];
-                        header("location:index.php?page=edit&name=$name");
+                        header("location:/edit/name/$name");
                         exit();
                     }
 
@@ -177,16 +215,14 @@ class EditController
                     $_SESSION["changes"]["name"] = trim(strip_tags($_POST["name"])) ?? "";
                     $_SESSION["changes"]["price"] = trim(strip_tags($_POST["price"])) ?? "";
                     $_SESSION["changes"]["errors"] = "Tous les champs doivent être remplis!";
-                    header("location: index.php?page=edit&add=product");
+                    header("location:/edit/add/product");
                     exit();
                 }
             }
         } else {
-            header("location: index.php?page=login");
+            header("location:/login");
             exit();
         }
     }
-
-
 }
 ?>

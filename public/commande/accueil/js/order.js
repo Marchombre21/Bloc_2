@@ -117,6 +117,7 @@ export const addToResult = (price, number = 1) => {
 };
 
 export const substractFromResult = (price) => {
-  result = Math.max(Math.floor((result - Number(price)) * 100) / 100, 0);
+  const convertCents = Math.round(Number(price)* 100);
+  result = Math.max(Math.round((result * 100) - convertCents) / 100, 0);
   
 }

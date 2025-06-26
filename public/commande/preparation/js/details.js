@@ -21,9 +21,7 @@ let detailsOrder;
 if (number) {
     detailsOrder = await getDetailsOrder(number)
 }
-//Méthode chatGPT qui fonctionne. Il dit que la copie est plus sécure plutôt que de splice pendant une itération ce qui risque de décaler les index 
-//mais les tests n'ont montré aucun problème donc je garde ma méthode. Edit: Finalement codeRabbit insiste lui aussi là-dessus donc on va arrêter d'être buté et on utilise leur façon de faire.
-// Ici on fait en sorte qu'il n'y ait qu'une seule ligne des produits de même nom et de même taille.
+
 const copyDetailsOrder = [];
 
 detailsOrder.forEach(item => {

@@ -29,14 +29,6 @@ class LoginModel
         $query->execute();
         return $query->fetch();
     }
-
-    public function setConnectedStatut()
-    {
-        $query = $this->db->prepare("update users set isConnected = true where id like :id");
-        $query->bindParam(":id", $_SESSION["user"]["id"]);
-        $query->execute();
-    }
-
 }
 
 ?>

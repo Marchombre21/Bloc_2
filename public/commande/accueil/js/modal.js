@@ -12,8 +12,8 @@ const contentModal = {
             title: "Une grosse faim?",
             sentence: "Le menu maxi Best Of comprend un sandwich, une grande frite et une boisson 50 Cl (+ 2 €)",
             images: {
-                image1: "../img/images/illustration-maxi-best-of.png",
-                image2: "../img/images/illustration-best-of.png"
+                image1: "/img/images/illustration-maxi-best-of.png",
+                image2: "/img/images/illustration-best-of.png"
             },
             label: {
                 id1: "maxi",
@@ -30,8 +30,8 @@ const contentModal = {
             title: "Choisissez votre accompagnement",
             sentence: "Le choix de Sophie ultime! Le plaisir ou le corps de rêve!",
             images: {
-                image1: "../img/frites/MOYENNE_FRITE.png",
-                image2: "../img/salades/PETITE-SALADE.png"
+                image1: "/img/images/GRANDE_FRITE.png",
+                image2: "/img/images/PETITE-SALADE.png"
             },
             label: {
                 id1: "Frites",
@@ -48,8 +48,8 @@ const contentModal = {
             title: "Choisissez votre style de patates",
             sentence: "Frites, potatoes, la pomme de terre dans tous ses états",
             images: {
-                image1: "../img/frites/MOYENNE_FRITE.png",
-                image2: "../img/frites/GRANDE_POTATOES.png"
+                image1: "/img/images/GRANDE_FRITE.png",
+                image2: "/img/images/GRANDE_POTATOES.png"
             },
             label: {
                 id1: "Frites",
@@ -102,19 +102,17 @@ export const backgroundClick = () => {
 
 export const openMenusWindow = () => {
     step++;
-    // let contentChoice = "";
-    // let mainContent = "";
 
     if (step === 1 || step === 2 || step === 3) {
         mainContent = `
                 <label class="firstLabels" for="${contentModal[chosenCategorie][step]["label"].id1}">
                     <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id1}" value="${contentModal[chosenCategorie][step]["label"].id1}" name="${contentModal[chosenCategorie][step]["label"].name}">
-                    <figure><img src="../../${contentModal[chosenCategorie][step]["images"].image1}" alt=""></figure>
+                    <figure><img src="${contentModal[chosenCategorie][step]["images"].image1}" alt=""></figure>
                     <span>${contentModal[chosenCategorie][step]["imageTitle"].title1}</span>
                 </label>
                 <label class="firstLabels" for="${contentModal[chosenCategorie][step]["label"].id2}">
                     <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id2}" value="${contentModal[chosenCategorie][step]["label"].id2}" name="${contentModal[chosenCategorie][step]["label"].name}">
-                    <figure><img src="../../${contentModal[chosenCategorie][step]["images"].image2}" alt=""></figure>
+                    <figure><img src="${contentModal[chosenCategorie][step]["images"].image2}" alt=""></figure>
                     <span>${contentModal[chosenCategorie][step]["imageTitle"].title2}</span>
                 </label>
                 `
@@ -148,44 +146,7 @@ export const openMenusWindow = () => {
         </form>
         
         `
-
-    // if (step === 1 || step === 2 || step === 3) {
-    //     // &times; code natif d'html pour faire le signe de la multiplication.
-    //     contentChoice = `
-    //     <span id="closeButton" class="close">&times;</span>
-    //     <form action="">
-    //     <header>
-    //         <h1>${contentModal[chosenCategorie][step].title}</h1>
-    //         <p>${contentModal[chosenCategorie][step].sentence}</p>
-    //     </header>
-    //         <div>
-
-    //             <label for="${contentModal[chosenCategorie][step]["label"].id1}">
-    //                 <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id1}" value="${contentModal[chosenCategorie][step]["label"].id1}" name="${contentModal[chosenCategorie][step]["label"].name}">
-    //                 <figure><img src="${contentModal[chosenCategorie][step]["images"].image1}" alt=""></figure>
-    //                 <span>${contentModal[chosenCategorie][step]["imageTitle"].title1}</span>
-    //             </label>
-    //             <label for="${contentModal[chosenCategorie][step]["label"].id2}">
-    //                 <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id2}" value="${contentModal[chosenCategorie][step]["label"].id2}" name="${contentModal[chosenCategorie][step]["label"].name}">
-    //                 <figure><img src="${contentModal[chosenCategorie][step]["images"].image2}" alt=""></figure>
-    //                 <span>${contentModal[chosenCategorie][step]["imageTitle"].title2}</span>
-    //             </label>
-
-    //         </div>
-
-    //         <button disabled type="submit">${contentModal[chosenCategorie][step].button}</button>
-    //     </form>
-
-    //     `
-    // }
     modal.innerHTML = contentChoice;
-    // backgroundModal.addEventListener("click", () => {
-    //     backgroundModal.style.display = "none";
-    //     step = 0;
-    //     const cancelledOrder = orderContentMenu.pop();
-    //     substractFromResult(cancelledOrder.price);
-    //     updateOrder();
-    // })
 
     modal.querySelector("#closeButton").addEventListener("click", () => {
         backgroundModal.style.display = "none";
@@ -278,9 +239,9 @@ export const openMenusWindow = () => {
     })
 }
 
-let number = 1;
 
 export const openDrinksWindow = (name, price, image) => {
+    let number = 1;
     mainContent = `
                 <label class="firstLabels" id="little-drink" for="${contentModal[chosenCategorie]["label"].id1}">
                     <input type="radio" id="${contentModal[chosenCategorie]["label"].id1}" value="${contentModal[chosenCategorie]["label"].id1}" name="${contentModal[chosenCategorie]["label"].name}">
@@ -319,9 +280,6 @@ export const openDrinksWindow = (name, price, image) => {
         
         `
     modal.innerHTML = contentChoice;
-    // backgroundModal.addEventListener("click", () => {
-    //     backgroundModal.style.display = "none";
-    // })
 
     modal.querySelector("#closeButton").addEventListener("click", () => {
         backgroundModal.style.display = "none";
@@ -374,7 +332,6 @@ export const openDrinksWindow = (name, price, image) => {
                     quantity: number
                 })
             }
-            // addToResult(Number((((price * 100) + 50) / 100) * number))
             addToResult(Number(price) + 0.5, number)
         } else if (choice === "30") {
             const index = orderContent.indexOf(orderContent.find(item => item.name === name + " 30Cl"));
@@ -388,10 +345,8 @@ export const openDrinksWindow = (name, price, image) => {
                     quantity: number
                 })
             }
-            // addToResult(Math.floor(Number((price * 100) * number) / 100))
             addToResult(price, number)
         }
-        number = 1;
         backgroundModal.style.display = "none";
         updateOrder()
     })

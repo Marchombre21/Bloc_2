@@ -7,7 +7,11 @@ class EditView{
         $this->controller = $controller;
     }
     public function render(){
-        $this->controller->applyEdits();
+        $this->controller->applyEditsUser();
+        $this->controller->applyEditsProducts();
+        $this->controller->applyEditsDescription();
+        $this->controller->applyDeleteProduct();
+        $this->controller->applyAddProduct();
         $datas = $this->controller->getDatas();
         require(DIR_TEMPLATES . "edit.php");
 

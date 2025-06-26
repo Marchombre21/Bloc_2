@@ -1,7 +1,8 @@
 <?php
-session_start();
+// session_start();
 require_once '../config/config.php';
 header('Content-Type: application/json');
+//Ligne obligatoire pour récupérer les données transmises dans le body de la requête post.
 $datas = file_get_contents('php://input');
 $data = json_decode($datas, true);
 

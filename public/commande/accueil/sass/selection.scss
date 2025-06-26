@@ -116,6 +116,31 @@ section div header {
     padding-bottom: 5px;
     border-bottom: 1px solid black;
 }
+@media (max-width:576px) {
+    #order{
+        top: 20vh;
+    }
+    #categories{
+        max-width: 100%;
+        position: fixed;
+        top: 0;
+        background-color: white;
+        z-index: 10000;
+    }
+    #listContent{
+        height: 60vh;
+    }
+    #order header{
+        font-size: 1.6rem;
+    }
+    #order header #logo{
+        margin: 10px auto;
+    }
+    #titles{
+        margin-top: 20vh;
+    }
+
+}
 
 .trashs{
     cursor: pointer;
@@ -133,8 +158,6 @@ section div header {
 
 
 #order span.fatAndBold {
-    /* position: absolute;
-    right: 0; */
     font-size: larger;
     font-weight: bold;
     display: inline;
@@ -189,10 +212,6 @@ section div header {
 }
 
 #order footer {
-
-    p {
-        position: relative;
-    }
 
     #buttons {
         text-align: center;

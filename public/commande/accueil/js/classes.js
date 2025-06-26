@@ -1,26 +1,3 @@
-// export class Categorie {
-//     constructor(title, image, price = "") {
-//         this.title = title;
-//         this.image = "../img/" + image;
-//         this.price = price;
-
-//     }
-//     render(addClass = "") {
-//         // Le data est là pour récupérer le nom de la catégorie plus tard.
-//         return (
-//             `
-//             <button class="categoriesButton ${addClass}" data-title = ${this.title} >
-//                 <figure>
-//                     <img src=${this.image} alt="${this.image}-logo" />
-//                     <figcaption><div>${this.title}${this.price}</div></figcaption>
-//                 </figure>
-//             </button>
-//             `
-
-//         );
-//     }
-// }
-
 export class Menu {
     constructor(list, number) {
         this.list = list;

@@ -30,12 +30,3 @@ if(ordersList.length === 0){
 }else{
     list.innerHTML = ordersList.join("");
 }
-
-
-
-// const orders2 = document.querySelectorAll("button[type='button']");
-// orders2.forEach(item => {
-//     item.addEventListener("click", (e) => {
-//         header
-//     })
-// })

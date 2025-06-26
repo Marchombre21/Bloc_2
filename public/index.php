@@ -60,13 +60,12 @@ foreach ($pages as $key => $value) {
         $view = $value["view"];
     }
 }
-
 if ($find) {
     require "../config/config.php";
     require DIR_MODEL . $_SESSION["page"] . ".php";
     require DIR_CONTROLLER . $_SESSION["page"] . ".php";
     require DIR_VIEW . $_SESSION["page"] . ".php";
-
+    
     $newModel = new $model($db);
     $newController = new $controller($newModel);
     $newView = new $view($newController);

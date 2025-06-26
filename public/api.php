@@ -9,9 +9,7 @@ $path = $_GET['route'] ?? '';
      exit;
  }
 
- $protected_routes = ['orders.php', 'categories.php', 'products.php'];
-
-if (in_array($path, $protected_routes) && (!isset($_SESSION['user']) || empty($_SESSION['user']))) {
+if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
     http_response_code(401);
     header('Content-Type: application/json');
     echo json_encode(['error' => 'Unauthorized', 'status' => 401]);

@@ -2,18 +2,22 @@ import { Menu } from './classes.js'
 const categoriesNav = document.getElementById("categories");
 const categoriesContent = document.getElementById("content");
 const headerProducts = document.querySelector("header");
-// const modal = document.getElementById("choices");
 const backgroundModal = document.getElementById("backgroundModal");
 import './order.js';
 import { orderContent, updateOrder, addToResult, substractFromResult } from './order.js';
-// import './modal.js';
 import { backgroundClick, openDrinksWindow, openMenusWindow } from './modal.js';
 import { orderContentMenu } from "./order.js";
 
 const getCategories = async () => {
     try{
-        const categories = await fetch("/api.php?route=categories.php").then(res => res.json())
-        return categories
+        // const categories = await fetch("/api.php?route=categories.php").then(res => res.json())
+        const response = await fetch("/api.php?route=categories.php");
+        if(!response.ok){
+            throw new Error('Problème côté serveur.')
+        }else{
+            const categories = await response.json();
+            return categories
+        }
     }catch (error) {
         console.error('Error fetching orders:', error);
         return [];

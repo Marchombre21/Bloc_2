@@ -10,9 +10,7 @@ class UsersView
     }
     public function render()
     {
-
-        $this->controller->deleteUser();
-
+        $this->controller->deleteUser();   
         $users = $this->controller->getUsers();
         require(DIR_TEMPLATES . "users.php");
     }

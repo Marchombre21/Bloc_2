@@ -44,10 +44,10 @@ class ResetController
                     $newEmail->isHTML(true);
                     $newEmail->Subject = "Réinitialisation du mot de passe";
                     $newEmail->CharSet = "UTF_8";
-                    $newEmail->Body = "<a href=\"http://localhost:8000/index.php?page=reset&token={$token}\">Réinitialiser votre mot de passe</a>";
+                    $newEmail->Body = "<a href=\"http://" . APP_URL . "/reset/token/{$token}\">Réinitialiser votre mot de passe</a>";
                     if ($newEmail->send()) {
                         $_SESSION["send"] = "Un lien de réinitialisation vous a été envoyé par email. Il sera désactivé dans 15 minutes pour des raisons de sécurité.";
-                        header("location: index.php?page=reset");
+                        header("location:/reset");
                         exit();
                     } else {
                         $_SESSION["wrongEmail"] = "Un problème est survenu lors de l'envoi de l'email, veuillez réessayer.";
@@ -58,7 +58,7 @@ class ResetController
                 $_SESSION["wrongEmail"] = "Aucun email renseigné.";
             }
         } else {
-            header("location: index.php?page=login");
+            header("location:/login");
             exit();
         }
 
@@ -75,7 +75,7 @@ class ResetController
                 $this->createNewPassword();
             } else {
                 $_SESSION["invalid"] = "Lien invalide ou expiré.";
-                header("location: index.php");
+                header("location:/index.php");
                 exit();
             }
         }
@@ -109,7 +109,7 @@ class ResetController
                     unset($_SESSION["validEmail"]);
                     unset($_SESSION["send"]);
                     unset($_SESSION["newPage"]);
-                    header("location: index.php");
+                    header("location:/index.php");
                     exit();
                 } else {
                     $errors["creation"] = "Il y a eu un soucis avec l'enregistrement du compte.";
