@@ -9,6 +9,7 @@ class HomeView{
     public function render(){
         if(!isset($_SESSION["user"]) || $_SESSION["user"]["function"] != "ADMIN"){
             header("location: index.php");
+            exit();
         }
         
         require(DIR_TEMPLATES . "home.php");

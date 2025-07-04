@@ -39,7 +39,6 @@ send.addEventListener("click", () => {
         tableTent += input.value
     })
     const order = JSON.parse(localStorage.getItem("order"));
-    // order.orderNumber += ` assignée à ${tableTent}` ;
     order.tableTent = tableTent;
     document.querySelector("figure").style.display = "none";
     document.querySelector("h1").innerText = "Toute l'équipe vous remercie!";

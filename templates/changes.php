@@ -38,7 +38,7 @@ if (isset($_GET["category"])) {
     ?>
     <main class="position-absolute absoluteCenter bg-light text-center p-5 rounded boxShadow">
         <figure class="text-center">
-            <img class="w-25" src="img/images/logo.png" alt="logo">
+            <img class="w-25" src="/img/images/logo.png" alt="logo">
         </figure>
         <h1>Quelle catégorie voulez-vous changer?</h1>
 
