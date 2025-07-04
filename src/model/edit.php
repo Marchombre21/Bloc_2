@@ -37,7 +37,6 @@ class EditModel
             $query->bindValue(":id", $id);
             return $query->execute();
         } catch (PDOException $e) {
-            $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
             error_log($e->getMessage());
             return false;
         }

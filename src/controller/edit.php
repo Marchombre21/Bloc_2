@@ -1,4 +1,6 @@
 <?php
+
+use Composer\Autoload\ClassLoader;
 class EditController
 {
 
@@ -15,9 +17,9 @@ class EditController
             header("location: index.php");
             exit();
         } else {
-            //Ici pas besoin de faire des trim strip tags vu que ce n'est pas l'utilisateur qui écrit ce qu'il veut.
             if (isset($_GET["id"]) && !empty($_GET["id"])) {
-                return $this->model->getDatasUser($_GET["id"]);
+                $id = trim(strip_tags($_GET["id"]));
+                return $this->model->getDatasUser($id);
             } else if (isset($_GET["name"]) && !empty($_GET["name"]) && isset($_SESSION["changes"])) {
                 if ($_GET["name"] === "description") {
                     return $this->model->getDescription($_SESSION["changes"]["category"]);
@@ -115,6 +117,7 @@ class EditController
                             header("location:/home");
                             exit();
                         } else {
+                            $_SESSION["changes"]["errors"] = "Une erreur a eu lieu lors de l'enregistrement des données.";
                             $name = $_SESSION["changes"]["name"];
                             header("location:/edit/name/$name");
                             exit();

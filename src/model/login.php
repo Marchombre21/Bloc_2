@@ -2,10 +2,10 @@
 
 class LoginModel
 {
-    public $db;
-    public $lastname;
-    public $firstname;
-    public $password;
+    private $db;
+    private $lastname;
+    private $firstname;
+    private $password;
 
 
     public function __construct(Pdo $db)
@@ -28,6 +28,10 @@ class LoginModel
         $query->bindParam(":lastname", $this->lastname, PDO::PARAM_STR);
         $query->execute();
         return $query->fetch();
+    }
+
+    public function getPassword(){
+        return $this->password;
     }
 }
 

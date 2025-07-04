@@ -20,6 +20,7 @@ if (isset($_GET["category"])) {
                     <div class="col text-center ">
                         <a href="/edit/name/<?= urlencode($data["name"]) ?>">
                             <figure>
+                                <!-- Sans ENT_QUOTES, seuls les guillemets doubles sont échappés (" devient &quot;) ; les guillemets simples restent inchangés. -->
                                 <img src="/img<?= htmlspecialchars($data["image"], ENT_QUOTES) ?>"
                                     alt="image <?= htmlspecialchars($data["name"], ENT_QUOTES) ?>">
                                 <figcaption><?= htmlspecialchars($data["name"], ENT_QUOTES) ?></figcaption>

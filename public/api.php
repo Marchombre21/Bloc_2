@@ -18,7 +18,7 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
 
 $file = realpath(__DIR__ . '/../api/' . $path);
  $apiDir = realpath(__DIR__ . '/../api/');
- 
+ //strpos nécessaire car si un pirate venait à mettre une adresse comme route="../../config/config.php" ça le bloquerait.
  if ($file && file_exists($file) && strpos($file, $apiDir) === 0) {
     require $file;
 } else {

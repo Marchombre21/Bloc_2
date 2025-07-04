@@ -8,7 +8,7 @@ require 'header.php';
     <h1>En tant qu'administrateur vous pouvez : </h1>
     <div class="container">
         <div class="row">
-            <a class="yellowButton my-2 my-lg-0 col" href="/changes">Modifier des produits</a>
+            <a class="yellowButton my-2 col" href="/changes">Modifier des produits</a>
         </div>
         <div class="row">
             <a class="yellowButton col" href="/new">Créer un nouveau compte utilisateur</a>

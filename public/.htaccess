@@ -13,4 +13,8 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^([a-zA-Z]+)/([a-zA-Z]+)/([^/]+)/([a-zA-Z]+)/([^/]+)$ index.php?page=$1&$2=$3&$4=$5 [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-zA-Z]+)/([a-zA-Z]+)/([^/]+)/([a-zA-Z]+)/([^/]+)/([a-zA-Z]+)/([^/]+)$ index.php?page=$1&$2=$3&$4=$5&$6=$7 [L]
 </IfModule>

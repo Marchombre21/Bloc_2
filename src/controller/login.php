@@ -17,7 +17,7 @@ class LoginController
         if (!$user) {
             $_SESSION["wrong"] = "Aucun utilisateur connu sous ces identifiants!";
         } else {
-            if (password_verify($this->model->password, $user["password"])) {
+            if (password_verify($this->model->getPassword(), $user["password"])) {
                 $_SESSION["user"] = [
                     "id" => $user["id"],
                     "function" => $user["function"],
@@ -26,7 +26,7 @@ class LoginController
                 unset($_SESSION["loginPage"]);
                 unset($_SESSION["wrong"]);
                 if ($user["function"] === "ADMIN") {
-                    header("location: home");
+                    header("location: /home");
                     exit();
                 }
                 if ($user["function"] === "ACC") {

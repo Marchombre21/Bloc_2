@@ -70,7 +70,7 @@ if ($datas === [] && !isset($_GET["add"])) {
                 
                 //enctype="multipart/form-data" nécessaire à tout formulaire qui veut envoyer des fichiers.
                 ?>
-                <a class="yellowButton text-nowrap my-2 d-block" onclick="return confirm('Êtes-vous sûr ?');" href="index.php?page=edit&target=delete&id=<?= $datas["id"] ?>">Supprimer complètement ce produit</a>
+                <a class="yellowButton text-nowrap my-2 d-block" onclick="return confirm('Êtes-vous sûr ?');" href="edit/target/delete/id/<?= $datas["id"] ?>">Supprimer complètement ce produit</a>
                 <form action="/edit/target/product/id/<?= $datas["id"] ?>" enctype="multipart/form-data" method="POST"
                     class="container">
                     <div class="row row-cols-1">
