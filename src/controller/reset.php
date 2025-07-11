@@ -26,11 +26,11 @@ class ResetController
                     $_SESSION["wrongEmail"] = "Aucun utilisateur connu sous cette adresse mail!";
                 } else {
                     $_SESSION["validEmail"] = $verifiedEmail;
-
+                    
                     unset($_SESSION["wrongEmail"]);
                     $token = bin2hex(random_bytes(50));
                     $this->model->createToken($token, $verifiedEmail);
-
+                    
                     $newEmail = new PHPMailer();
                     $newEmail->isSMTP();
                     $newEmail->SMTPAuth = true;
